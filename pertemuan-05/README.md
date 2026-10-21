@@ -24,3 +24,26 @@ Pada tahap ini, `README.md` diperbarui untuk mencatat implementasi fitur READ da
 3. **Pengujian tampilan data:** Berhasil. Tabel menampilkan beberapa data kendaraan, dilengkapi fitur pencarian, pilihan jumlah data yang ditampilkan, serta tombol Ubah dan Hapus.
 4. **Pengujian foto kendaraan:** Pada data yang terlihat di screenshot, kolom foto depan menampilkan keterangan “Belum ada foto” karena foto belum tersedia.
 5. **Pengujian autentikasi admin:** Belum diuji berdasarkan screenshot ini.
+
+## D.5. Memperbarui README.md dan Mencatat Perubahan Git
+
+Pada tahap ini, dilakukan pembaruan dokumentasi setelah fitur tambah kendaraan (INSERT) berhasil diimplementasikan. Fitur ini digunakan untuk menambahkan data kendaraan baru ke tabel "t_mobil" melalui pola MVC (Model, View, Controller).
+
+Perubahan yang dilakukan meliputi:
+
+1. Model ("Mobil_model.php")
+   Menambahkan method "create()" untuk menyimpan data kendaraan ke database menggunakan prepared statement.
+
+2. Controller ("Mobil_controller.php")
+   Menambahkan proses penambahan kendaraan, validasi input, dan pengelolaan unggahan foto kendaraan.
+
+3. View ("mobil_view.php")
+   Membuat formulir tambah kendaraan yang berisi data kendaraan, seperti nomor plat, nama mobil, jumlah kursi, jumlah bagasi, jenis mobil, transmisi, tahun pembuatan, foto kendaraan, harga sewa, catatan, dan status kendaraan.
+
+4. Pengujian fitur
+   Melakukan pengujian untuk memastikan data kendaraan dapat ditambahkan, validasi berjalan dengan baik, dan data yang tersimpan ditampilkan pada halaman manajemen kendaraan. Fitur READ juga harus tetap berfungsi.
+
+5. Pencatatan perubahan Git
+   Setelah hasil pengembangan disalin ke folder "pertemuan-05", perubahan diperiksa menggunakan Git, kemudian dilakukan commit dan push ke GitHub sebagai dokumentasi perkembangan proyek.
+
+Kesimpulan: Tahap D.5 bertujuan mendokumentasikan implementasi fitur tambah kendaraan beserta hasil pengujiannya dan menyimpan perkembangan proyek menggunakan Git dan GitHub.
