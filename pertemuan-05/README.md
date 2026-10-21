@@ -75,3 +75,31 @@ git push
 Kesimpulan
 
 Fitur UPDATE data kendaraan telah berhasil diimplementasikan dan diuji. Data kendaraan dapat diperbarui dan disimpan ke dalam database. Dokumentasi serta perubahan kode dicatat dalam repositori Git agar tersimpan dengan baik.
+
+F.4. Memperbarui README.md dan Mencatat Perubahan Git
+
+Pada tahap ini, dilakukan pembaruan dokumentasi setelah implementasi dan pengujian fitur DELETE data kendaraan selesai.
+
+1. Implementasi Fitur DELETE
+
+Fitur DELETE digunakan untuk menghapus data kendaraan yang sudah tersimpan di database. Proses penghapusan dilakukan melalui menu atau tombol hapus pada halaman daftar kendaraan.
+
+2. Hasil Pengujian
+
+Pengujian fitur DELETE dilakukan untuk memastikan data kendaraan dapat dihapus dari database. Setelah proses penghapusan berhasil, data kendaraan yang dipilih tidak lagi ditampilkan pada halaman daftar kendaraan.
+
+3. Pembaruan Dokumentasi
+
+File "README.md" diperbarui untuk menjelaskan implementasi fitur DELETE, perubahan berkas program, dan hasil pengujian yang telah dilakukan. Berkas program yang baru atau mengalami perubahan disalin ke folder "pertemuan-05/".
+
+4. Pencatatan Perubahan Menggunakan Git
+
+Setelah kode program dan dokumentasi diperbarui, perubahan dicatat menggunakan Git dengan perintah berikut:
+
+git add .
+git commit -m "Implementasi fitur DELETE data kendaraan dan pembaruan README"
+git push
+
+Kesimpulan
+
+Fitur DELETE dikembangkan untuk melengkapi pengelolaan data kendaraan pada aplikasi penyewaan kendaraan berbasis PHP dengan pendekatan MVC. Dokumentasi diperbarui dan perubahan kode disimpan ke repositori Git agar perkembangan proyek tercatat dengan baik.
