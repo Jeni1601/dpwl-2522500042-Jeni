@@ -1,5 +1,5 @@
-
 <?php
+
 // P5: CRUD Mobil
 class Mobil_controller extends Controller
 {
@@ -16,8 +16,10 @@ class Mobil_controller extends Controller
 
     public function index(): void
     {
+        // Semua halaman/proses harus terlindungi.
         require_admin_login();
 
+        // Menampilkan data kendaraan.
         $this->view('admin/mobil_view', [
             'username' => $_SESSION['admin_username'],
             'mobil' => $this->model->getAll(),
@@ -28,21 +30,7 @@ class Mobil_controller extends Controller
         ]);
     }
 
-    private function renderMobil(
-        string $mode,
-        ?array $mobilDipilih = null,
-        ?string $error = null
-    ): void {
-        $this->view('admin/mobil_view', [
-            'username' => $_SESSION['admin_username'],
-            'mobil' => $this->model->getAll(),
-            'flash' => null,
-            'mode' => $mode,
-            'mobil_dipilih' => $mobilDipilih,
-            'error' => $error,
-        ]);
-    }
-
+    // Memvalidasi input data kendaraan.
     private function validateMobilInput(array $data): ?string
     {
         if (
@@ -60,6 +48,7 @@ class Mobil_controller extends Controller
             return 'Nama mobil wajib diisi dan maksimal 40 karakter.';
         }
 
+        // Kolom pada skema adalah TINYINT bertanda (signed).
         if (
             !is_int($data['nkursi']) ||
             $data['nkursi'] < 1 ||
@@ -107,28 +96,27 @@ class Mobil_controller extends Controller
             return 'Catatan unit wajib diisi dan maksimal 500 karakter.';
         }
 
-        if (!in_array(
-            $data['status_unit'],
-            ['tersedia', 'disewa', 'tidaktersedia'],
-            true
-        )) {
+        if (
+            !in_array(
+                $data['status_unit'],
+                ['tersedia', 'disewa', 'tidaktersedia'],
+                true
+            )
+        ) {
             return 'Status kendaraan tidak valid.';
         }
 
         return null;
     }
 
+    // Mengunggah foto kendaraan.
     private function uploadFoto(string $field): array
     {
-        if (!in_array(
-            $field,
-            ['ft_depan', 'ft_blkg', 'ft_interior'],
-            true
-        )) {
+        if (!in_array($field, ['ft_depan', 'ft_blkg', 'ft_interior'], true)) {
             return [
                 'success' => false,
                 'filename' => null,
-                'error' => 'Field foto tidak valid.',
+                'error' => 'Field foto tidak valid.'
             ];
         }
 
@@ -139,7 +127,7 @@ class Mobil_controller extends Controller
             return [
                 'success' => true,
                 'filename' => null,
-                'error' => null,
+                'error' => null
             ];
         }
 
@@ -149,7 +137,7 @@ class Mobil_controller extends Controller
             return [
                 'success' => false,
                 'filename' => null,
-                'error' => 'Unggah foto gagal. Periksa ukuran file dan konfigurasi PHP.',
+                'error' => 'Unggah foto gagal. Periksa ukuran file dan konfigurasi PHP.'
             ];
         }
 
@@ -162,7 +150,7 @@ class Mobil_controller extends Controller
             return [
                 'success' => false,
                 'filename' => null,
-                'error' => 'Foto harus berukuran lebih dari 0 byte dan maksimal 5 MB.',
+                'error' => 'Foto harus berukuran lebih dari 0 byte dan maksimal 5 MB.'
             ];
         }
 
@@ -182,7 +170,7 @@ class Mobil_controller extends Controller
             return [
                 'success' => false,
                 'filename' => null,
-                'error' => 'Format foto harus JPEG, PNG, atau WEBP yang valid.',
+                'error' => 'Format foto harus JPEG, PNG, atau WEBP yang valid.'
             ];
         }
 
@@ -200,7 +188,7 @@ class Mobil_controller extends Controller
             return [
                 'success' => false,
                 'filename' => null,
-                'error' => 'Folder penyimpanan foto tidak dapat dibuat.',
+                'error' => 'Folder penyimpanan foto tidak dapat dibuat.'
             ];
         }
 
@@ -208,7 +196,7 @@ class Mobil_controller extends Controller
             return [
                 'success' => false,
                 'filename' => null,
-                'error' => 'Folder penyimpanan foto tidak dapat ditulis.',
+                'error' => 'Folder penyimpanan foto tidak dapat ditulis.'
             ];
         }
 
@@ -221,28 +209,26 @@ class Mobil_controller extends Controller
             return [
                 'success' => false,
                 'filename' => null,
-                'error' => 'Nama file foto gagal dibuat.',
+                'error' => 'Nama file foto gagal dibuat.'
             ];
         }
 
-        if (!move_uploaded_file(
-            $file['tmp_name'],
-            $uploadDir . $filename
-        )) {
+        if (!move_uploaded_file($file['tmp_name'], $uploadDir . $filename)) {
             return [
                 'success' => false,
                 'filename' => null,
-                'error' => 'Foto gagal dipindahkan ke folder penyimpanan.',
+                'error' => 'Foto gagal dipindahkan ke folder penyimpanan.'
             ];
         }
 
         return [
             'success' => true,
             'filename' => $filename,
-            'error' => null,
+            'error' => null
         ];
     }
 
+    // Menghapus foto baru jika proses penyimpanan gagal.
     private function hapusFotoBaru(array $filenames): void
     {
         $uploadDir = dirname(APPPATH)
@@ -251,6 +237,7 @@ class Mobil_controller extends Controller
             . DIRECTORY_SEPARATOR;
 
         foreach ($filenames as $filename) {
+            // Hanya hapus file yang mengikuti pola nama dari uploadFoto().
             if (
                 is_string($filename) &&
                 preg_match(
@@ -267,6 +254,23 @@ class Mobil_controller extends Controller
         }
     }
 
+    // Menampilkan halaman kendaraan beserta pesan kesalahan.
+    private function renderMobil(
+        string $mode,
+        ?array $mobilDipilih = null,
+        ?string $error = null
+    ): void {
+        $this->view('admin/mobil_view', [
+            'username' => $_SESSION['admin_username'],
+            'mobil' => $this->model->getAll(),
+            'flash' => null,
+            'mode' => $mode,
+            'mobil_dipilih' => $mobilDipilih,
+            'error' => $error,
+        ]);
+    }
+
+    // P5 Tahap D: INSERT data kendaraan.
     public function tambah(): void
     {
         require_admin_login();
@@ -316,6 +320,8 @@ class Mobil_controller extends Controller
             return;
         }
 
+        // Nomor plat merupakan PRIMARY KEY.
+        // Database menangani jika nomor plat sudah digunakan.
         $uploadedFiles = [];
 
         foreach (['ft_depan', 'ft_blkg', 'ft_interior'] as $field) {
@@ -335,6 +341,7 @@ class Mobil_controller extends Controller
         }
 
         try {
+            // Memanggil INSERT pada Mobil_model.php.
             $success = $this->model->create($data);
         } catch (Throwable $e) {
             $success = false;
@@ -351,9 +358,97 @@ class Mobil_controller extends Controller
             return;
         }
 
-        set_flash_message('success', 'Data kendaraan berhasil ditambahkan.');
+        set_flash_message(
+            'success',
+            'Data kendaraan berhasil ditambahkan.'
+        );
 
         header('Location: ' . site_url('admin/mobil'));
         exit;
-    }
+    } 
+
+    public function ubah(string $noPlat): void 
+    { 
+      require_admin_login(); 
+     
+      $noPlat = rawurldecode($noPlat); 
+      $mobilLama = $this->model->findByNoPlat($noPlat); 
+     
+      if ($mobilLama === null) { 
+        set_flash_message('danger', 'Data kendaraan tidak ditemukan.'); 
+        header('Location: ' . site_url('admin/mobil')); 
+        exit; 
+      } 
+     
+      if ($_SERVER['REQUEST_METHOD'] === 'GET') { 
+        $this->renderMobil('ubah', $mobilLama); 
+        return; 
+      } 
+     
+      if ($_SERVER['REQUEST_METHOD'] !== 'POST') { 
+        http_response_code(405); 
+        exit('Metode request tidak diizinkan.'); 
+      } 
+     
+      $data = [ 
+        'no_plat' => $noPlat, 
+        'nm_mobil' => trim((string) ($_POST['nm_mobil'] ?? '')), 
+        'nkursi' => filter_var($_POST['nkursi'] ?? null, FILTER_VALIDATE_INT), 
+        'nbagasi' => filter_var($_POST['nbagasi'] ?? null, FILTER_VALIDATE_INT), 
+        'jns_mobil' => (string) ($_POST['jns_mobil'] ?? ''), 
+        'transmisi' => (string) ($_POST['transmisi'] ?? ''), 
+        'thn_buat' => filter_var($_POST['thn_buat'] ?? null, FILTER_VALIDATE_INT), 
+        'ft_depan' => $mobilLama['ft_depan'], 
+        'ft_blkg' => $mobilLama['ft_blkg'], 
+        'ft_interior' => $mobilLama['ft_interior'], 
+        'hrg_hari' => filter_var($_POST['hrg_hari'] ?? null, FILTER_VALIDATE_INT), 
+        'cttn_unit' => trim((string) ($_POST['cttn_unit'] ?? '')), 
+        'status_unit' => (string) ($_POST['status_unit'] ?? ''), 
+      ]; 
+     
+      $error = $this->validateMobilInput($data); 
+      if ($error !== null) { 
+        $this->renderMobil('ubah', array_merge($mobilLama, $data), $error); 
+        return; 
+      } 
+     
+      $uploadedFiles = []; 
+      $fotoLamaUntukDihapus = []; 
+      foreach (['ft_depan', 'ft_blkg', 'ft_interior'] as $field) { 
+        $upload = $this->uploadFoto($field); 
+        if (!$upload['success']) { 
+          $this->hapusFotoBaru($uploadedFiles); 
+          $this->renderMobil('ubah', array_merge($mobilLama, $data), $upload['error']); 
+          return; 
+        } 
+        if ($upload['filename'] !== null) { 
+          $uploadedFiles[] = $upload['filename']; 
+          if (!empty($mobilLama[$field])) { 
+            $fotoLamaUntukDihapus[] = $mobilLama[$field]; 
+          } 
+          $data[$field] = $upload['filename']; 
+        } 
+      } 
+     
+      try { 
+        $success = $this->model->update($noPlat, $data); 
+      } catch (Throwable $e) { 
+        $success = false; 
+      } 
+     
+      if (!$success) { 
+        $this->hapusFotoBaru($uploadedFiles); 
+        $this->renderMobil( 
+          'ubah', 
+          array_merge($mobilLama, $data), 
+          'Data kendaraan gagal diperbarui. Periksa kembali data yang dimasukkan.' 
+        ); 
+        return; 
+      } 
+     
+      $this->hapusFotoBaru($fotoLamaUntukDihapus); 
+      set_flash_message('success', 'Data kendaraan berhasil diperbarui.'); 
+      header('Location: ' . site_url('admin/mobil')); 
+      exit; 
+    } 
 }

@@ -47,3 +47,31 @@ Perubahan yang dilakukan meliputi:
    Setelah hasil pengembangan disalin ke folder "pertemuan-05", perubahan diperiksa menggunakan Git, kemudian dilakukan commit dan push ke GitHub sebagai dokumentasi perkembangan proyek.
 
 Kesimpulan: Tahap D.5 bertujuan mendokumentasikan implementasi fitur tambah kendaraan beserta hasil pengujiannya dan menyimpan perkembangan proyek menggunakan Git dan GitHub.
+
+E.6. Pembaruan README.md dan Pencatatan Perubahan Git
+
+Pada tahap ini, dilakukan dokumentasi hasil implementasi dan pengujian fitur UPDATE data kendaraan.
+
+1. Implementasi Fitur UPDATE
+
+Fitur UPDATE digunakan untuk mengubah data kendaraan yang sudah tersimpan di database. Admin dapat membuka formulir edit, mengubah informasi kendaraan, kemudian menyimpan perubahan tersebut.
+
+2. Hasil Pengujian
+
+Pengujian fitur UPDATE berhasil dilakukan. Data kendaraan dapat diubah melalui formulir edit dan disimpan ke dalam database. Setelah proses penyimpanan berhasil, data terbaru ditampilkan pada halaman daftar kendaraan sesuai dengan perubahan yang dilakukan.
+
+3. Dokumentasi Perubahan
+
+File "README.md" diperbarui untuk mencatat implementasi fitur UPDATE dan hasil pengujiannya. Berkas program yang mengalami perubahan juga disalin ke folder "pertemuan-05/" sesuai struktur proyek.
+
+4. Pencatatan Perubahan Menggunakan Git
+
+Setelah kode program dan dokumentasi diperbarui, perubahan dicatat menggunakan Git dengan perintah berikut:
+
+git add .
+git commit -m "Implementasi fitur UPDATE data kendaraan dan pembaruan README"
+git push
+
+Kesimpulan
+
+Fitur UPDATE data kendaraan telah berhasil diimplementasikan dan diuji. Data kendaraan dapat diperbarui dan disimpan ke dalam database. Dokumentasi serta perubahan kode dicatat dalam repositori Git agar tersimpan dengan baik.
