@@ -27,6 +27,7 @@ Jalur CSS, JavaScript, gambar, dan webfonts pada template Zay Shop perlu dicocok
 
 Hasil pemeriksaan menunjukkan bahwa sebagian besar struktur folder dan aset utama Zay Shop sudah tersedia di dalam proyek. Tahap selanjutnya adalah memeriksa kesesuaian jalur aset dan memastikan file yang dibutuhkan oleh template tersedia. Keberhasilan tampilan, pemuatan aset, dan navigasi harus dibuktikan melalui pengujian setelah integrasi pada aplikasi MVC selesai.
 
+
 ## B.4. Hasil Pengujian Integrasi Model, Controller, View, dan Navigasi Katalog
 
 Pengujian dilakukan dengan membuka halaman katalog kendaraan melalui browser menggunakan URL `http://localhost/dpwl-2522500042-Jeni/pertemuan-06/index.php/katalog`.
@@ -43,3 +44,21 @@ Pengujian dilakukan dengan membuka halaman katalog kendaraan melalui browser men
 ### Kesimpulan
 
 Berdasarkan pengujian awal, halaman katalog kendaraan berhasil diakses melalui route `/katalog` dan ditampilkan di browser. Hal ini menunjukkan bahwa halaman katalog sudah dapat dibuka. Pengujian pengambilan data dari Model dan fungsi navigasi perlu dipastikan kembali agar integrasi Model, Controller, View, dan navigasi dapat dinyatakan berjalan dengan baik.
+
+
+## C.4. Hasil Pengujian Navigasi Katalog ke Detail dan Penanganan Galat
+
+Pengujian dilakukan untuk memastikan navigasi dari halaman katalog ke halaman detail kendaraan berjalan dengan baik serta aplikasi dapat menangani kondisi ketika kendaraan tidak ditemukan.
+
+### Hasil Pengujian
+
+| No. | Skenario Pengujian | Hasil yang Diharapkan | Hasil Aktual |
+|---|---|---|---|
+| 1 | Membuka halaman katalog melalui URL `/index.php/katalog`. | Halaman katalog kendaraan ditampilkan. | Berhasil, halaman katalog kendaraan muncul di browser. |
+| 2 | Mengeklik foto atau nama kendaraan pada halaman katalog. | Pengguna diarahkan ke halaman detail kendaraan yang dipilih. | Berhasil, halaman detail kendaraan dapat dibuka. |
+| 3 | Memeriksa informasi kendaraan pada halaman detail. | Informasi kendaraan ditampilkan sesuai kendaraan yang dipilih. | Berhasil, informasi detail kendaraan ditampilkan. |
+| 4 | Membuka URL detail menggunakan nomor polisi kendaraan yang tidak terdaftar. | Aplikasi menampilkan pesan `Kendaraan tidak ditemukan.` dengan status HTTP 404. | Berhasil, aplikasi menampilkan penanganan galat untuk kendaraan yang tidak ditemukan. |
+
+### Kesimpulan
+
+Berdasarkan hasil pengujian, navigasi dari halaman katalog ke halaman detail kendaraan berjalan dengan baik. Informasi detail kendaraan dapat ditampilkan, dan aplikasi juga dapat menangani permintaan detail kendaraan yang tidak ditemukan. Dengan demikian, pengujian pada tahap C.4 berhasil dilakukan sesuai dengan skenario pengujian.
