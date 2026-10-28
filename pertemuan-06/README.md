@@ -26,3 +26,20 @@ Jalur CSS, JavaScript, gambar, dan webfonts pada template Zay Shop perlu dicocok
 ### Kesimpulan
 
 Hasil pemeriksaan menunjukkan bahwa sebagian besar struktur folder dan aset utama Zay Shop sudah tersedia di dalam proyek. Tahap selanjutnya adalah memeriksa kesesuaian jalur aset dan memastikan file yang dibutuhkan oleh template tersedia. Keberhasilan tampilan, pemuatan aset, dan navigasi harus dibuktikan melalui pengujian setelah integrasi pada aplikasi MVC selesai.
+
+## B.4. Hasil Pengujian Integrasi Model, Controller, View, dan Navigasi Katalog
+
+Pengujian dilakukan dengan membuka halaman katalog kendaraan melalui browser menggunakan URL `http://localhost/dpwl-2522500042-Jeni/pertemuan-06/index.php/katalog`.
+
+### Hasil Pengujian
+
+| No. | Skenario Pengujian | Hasil yang Diharapkan | Hasil Aktual |
+|---|---|---|---|
+| 1 | Membuka halaman katalog melalui route `/katalog`. | Halaman katalog kendaraan berhasil ditampilkan. | Berhasil, halaman katalog kendaraan muncul di browser. |
+| 2 | Memeriksa integrasi Controller dan View. | Controller memanggil View untuk menampilkan halaman katalog. | Halaman katalog berhasil ditampilkan. |
+| 3 | Memeriksa pengambilan data kendaraan dari Model. | Data kendaraan ditampilkan sesuai data yang tersedia di database. | Perlu diperiksa dengan memastikan data kendaraan yang muncul sesuai isi database. |
+| 4 | Memeriksa navigasi katalog. | Tautan navigasi dapat digunakan sesuai fungsinya. | Perlu diuji dengan mencoba tautan navigasi yang tersedia. |
+
+### Kesimpulan
+
+Berdasarkan pengujian awal, halaman katalog kendaraan berhasil diakses melalui route `/katalog` dan ditampilkan di browser. Hal ini menunjukkan bahwa halaman katalog sudah dapat dibuka. Pengujian pengambilan data dari Model dan fungsi navigasi perlu dipastikan kembali agar integrasi Model, Controller, View, dan navigasi dapat dinyatakan berjalan dengan baik.
