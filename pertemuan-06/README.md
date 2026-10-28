@@ -79,3 +79,22 @@ Pengujian dilakukan untuk memastikan fitur registrasi penyewa berjalan dengan ba
 ### Kesimpulan
 
 Berdasarkan hasil pengujian, fitur registrasi penyewa berjalan sesuai dengan yang diharapkan. Sistem dapat menyimpan akun baru menggunakan data yang valid, menolak input yang tidak valid, dan mencegah penggunaan username yang sudah terdaftar. Dengan demikian, pengujian pada tahap D.5 berhasil dilakukan.
+
+
+## E.4. Hasil Pengujian Login, Sesi, Logout, dan Pembatasan Akses Penyewa
+
+Pengujian dilakukan untuk memastikan fitur login dan logout penyewa berjalan dengan baik. Pengujian meliputi login menggunakan data yang benar, login menggunakan data yang salah, pengelolaan sesi, proses logout, dan pembatasan akses setelah logout.
+
+### Hasil Pengujian
+
+| No. | Skenario Pengujian | Hasil yang Diharapkan | Hasil Aktual |
+|---|---|---|---|
+| 1 | Login menggunakan username dan password yang benar. | Sistem menerima login dan membuat sesi penyewa. | Berhasil, penyewa dapat login menggunakan akun yang sudah terdaftar. |
+| 2 | Login menggunakan username atau password yang salah. | Sistem menolak login dan menampilkan pesan kesalahan. | Berhasil, sistem menolak login dan menampilkan pesan kesalahan. |
+| 3 | Mengakses halaman yang memerlukan sesi setelah login. | Sistem mengenali sesi penyewa dan mengizinkan akses ke halaman yang sesuai. | Berhasil, penyewa yang sudah login dapat mengakses halaman yang memerlukan sesi. |
+| 4 | Melakukan logout melalui menu logout penyewa. | Sistem mengakhiri sesi penyewa. | Berhasil, penyewa dapat logout dan sesi login berakhir. |
+| 5 | Mengakses kembali halaman yang memerlukan login setelah logout. | Sistem menolak akses tanpa sesi login. | Berhasil, sistem membatasi akses setelah penyewa logout. |
+
+### Kesimpulan
+
+Berdasarkan hasil pengujian, fitur login, pengelolaan sesi, logout, dan pembatasan akses penyewa berjalan sesuai dengan yang diharapkan. Sistem dapat menerima data login yang benar, menolak data login yang salah, mengelola sesi penyewa, serta membatasi akses ke halaman yang memerlukan login setelah penyewa logout. Dengan demikian, pengujian pada tahap E.4 berhasil dilakukan.
