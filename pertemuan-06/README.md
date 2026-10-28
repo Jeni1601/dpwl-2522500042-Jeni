@@ -98,3 +98,22 @@ Pengujian dilakukan untuk memastikan fitur login dan logout penyewa berjalan den
 ### Kesimpulan
 
 Berdasarkan hasil pengujian, fitur login, pengelolaan sesi, logout, dan pembatasan akses penyewa berjalan sesuai dengan yang diharapkan. Sistem dapat menerima data login yang benar, menolak data login yang salah, mengelola sesi penyewa, serta membatasi akses ke halaman yang memerlukan login setelah penyewa logout. Dengan demikian, pengujian pada tahap E.4 berhasil dilakukan.
+
+
+## F.5. Hasil Pengujian Pembaruan Profil dan Penanganan Input Tidak Valid
+
+Pengujian dilakukan pada halaman profil penyewa melalui menu ikon profil. Tujuan pengujian ini adalah memastikan data profil penyewa dapat diperbarui dan sistem dapat menangani input yang tidak sesuai dengan ketentuan.
+
+### Hasil Pengujian
+
+| No. | Skenario Pengujian | Hasil yang Diharapkan | Hasil Pengujian |
+|---|---|---|---|
+| 1 | Membuka halaman profil setelah login sebagai penyewa. | Halaman profil menampilkan data penyewa yang sedang login. | Berhasil apabila data profil penyewa tampil sesuai akun yang digunakan. |
+| 2 | Mengubah data profil dengan input yang valid, seperti NIK 16 digit, nama lengkap, nomor HP, dan alamat. | Sistem menyimpan perubahan dan menampilkan data profil terbaru. | Berhasil apabila perubahan tersimpan dan data terbaru ditampilkan kembali. |
+| 3 | Mengisi NIK kurang atau lebih dari 16 digit atau menggunakan karakter selain angka. | Sistem menolak input NIK yang tidak sesuai ketentuan. | Berhasil apabila input NIK yang tidak valid ditolak. |
+| 4 | Mengisi nama lengkap menggunakan angka. | Sistem menolak nama yang tidak sesuai format. | Berhasil apabila nama yang mengandung angka ditolak. |
+| 5 | Mengosongkan salah satu kolom wajib, seperti nama lengkap, nomor HP, atau alamat. | Sistem meminta pengguna melengkapi kolom wajib sebelum menyimpan perubahan. | Berhasil apabila data tidak valid tidak dapat disimpan. |
+
+### Kesimpulan
+
+Berdasarkan pengujian yang dilakukan, fitur profil penyewa digunakan untuk menampilkan dan memperbarui data penyewa. Validasi input diperlukan agar data yang disimpan sesuai dengan ketentuan. Pengujian dinyatakan berhasil apabila perubahan data valid dapat disimpan dan input tidak valid ditolak oleh sistem.
