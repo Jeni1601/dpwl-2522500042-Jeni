@@ -62,3 +62,20 @@ Pengujian dilakukan untuk memastikan navigasi dari halaman katalog ke halaman de
 ### Kesimpulan
 
 Berdasarkan hasil pengujian, navigasi dari halaman katalog ke halaman detail kendaraan berjalan dengan baik. Informasi detail kendaraan dapat ditampilkan, dan aplikasi juga dapat menangani permintaan detail kendaraan yang tidak ditemukan. Dengan demikian, pengujian pada tahap C.4 berhasil dilakukan sesuai dengan skenario pengujian.
+
+
+## D.5. Hasil Pengujian Registrasi Penyewa
+
+Pengujian dilakukan untuk memastikan fitur registrasi penyewa berjalan dengan baik. Pengujian meliputi registrasi menggunakan data valid, input tidak valid, dan pendaftaran menggunakan username yang sudah terdaftar.
+
+### Hasil Pengujian
+
+| No. | Skenario Pengujian | Hasil yang Diharapkan | Hasil Aktual |
+|---|---|---|---|
+| 1 | Melakukan registrasi menggunakan data yang valid dan username yang belum terdaftar. | Akun penyewa berhasil dibuat dan sistem menampilkan pesan keberhasilan. | Berhasil, akun penyewa berhasil didaftarkan menggunakan data yang valid. |
+| 2 | Melakukan registrasi dengan input yang tidak valid. | Sistem menolak data dan menampilkan pesan kesalahan. | Berhasil, sistem menolak input yang tidak valid dan menampilkan pesan kesalahan. |
+| 3 | Melakukan registrasi menggunakan username yang sudah terdaftar. | Sistem menolak pendaftaran dan menampilkan pesan bahwa username sudah digunakan. | Berhasil, sistem menolak pendaftaran dengan username yang sudah terdaftar. |
+
+### Kesimpulan
+
+Berdasarkan hasil pengujian, fitur registrasi penyewa berjalan sesuai dengan yang diharapkan. Sistem dapat menyimpan akun baru menggunakan data yang valid, menolak input yang tidak valid, dan mencegah penggunaan username yang sudah terdaftar. Dengan demikian, pengujian pada tahap D.5 berhasil dilakukan.
