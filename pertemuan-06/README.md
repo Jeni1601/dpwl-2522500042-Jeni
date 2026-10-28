@@ -117,3 +117,26 @@ Pengujian dilakukan pada halaman profil penyewa melalui menu ikon profil. Tujuan
 ### Kesimpulan
 
 Berdasarkan pengujian yang dilakukan, fitur profil penyewa digunakan untuk menampilkan dan memperbarui data penyewa. Validasi input diperlukan agar data yang disimpan sesuai dengan ketentuan. Pengujian dinyatakan berhasil apabila perubahan data valid dapat disimpan dan input tidak valid ditolak oleh sistem.
+
+
+### G.5. Pengujian Penghilangan `index.php` dari URL Aplikasi
+
+**Perubahan yang dilakukan:**
+
+- Mengubah `default_controller` pada `application/config/routes.php` menjadi `Katalog_controller`.
+- Menyesuaikan konfigurasi URL agar aplikasi dapat diakses tanpa menuliskan `index.php`.
+- Menguji halaman utama dan navigasi aplikasi setelah perubahan konfigurasi.
+
+**Hasil pengujian aktual:**
+
+| No. | Skenario Pengujian | Hasil Aktual | Status |
+|---|---|---|---|
+| 1 | Mengakses halaman utama melalui `http://localhost/dpwl_2522500042`. | Halaman utama katalog berhasil ditampilkan tanpa menuliskan `index.php` pada URL. | Berhasil |
+| 2 | Mengakses halaman katalog melalui navigasi aplikasi. | Halaman katalog dapat dibuka dengan baik. | Berhasil |
+| 3 | Mengklik navigasi yang tersedia pada aplikasi. | Navigasi dapat digunakan dan mengarah ke halaman yang sesuai. | Berhasil |
+| 4 | Memeriksa URL pada address bar browser. | URL aplikasi dapat diakses tanpa menampilkan `index.php`. | Berhasil |
+| 5 | Memastikan fitur aplikasi yang telah dibuat tetap berjalan setelah perubahan. | Fitur yang diuji dapat berjalan tanpa galat. | Berhasil |
+
+**Kesimpulan:**
+
+Berdasarkan hasil pengujian, tahap G.5 berhasil dilakukan. Pengaturan `default_controller` telah diarahkan ke `Katalog_controller`, sehingga halaman katalog menjadi halaman utama aplikasi. URL aplikasi dapat diakses tanpa menuliskan `index.php`, navigasi berjalan dengan baik, dan fitur yang diuji tetap dapat digunakan tanpa galat.
