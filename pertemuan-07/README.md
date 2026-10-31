@@ -119,3 +119,26 @@ Pengujian dilakukan melalui halaman katalog kendaraan pada aplikasi localhost de
 **Kesimpulan:**
 
 Perubahan pada halaman katalog berhasil menyesuaikan tampilan tombol berdasarkan status login penyewa dan ketersediaan kendaraan. Pada tahap ini, pengujian hanya berfokus pada tampilan dan kondisi tombol. Proses pengiriman formulir dan penyimpanan transaksi ke keranjang akan diuji setelah Controller dan Model terintegrasi.
+
+### D.1. Mengubah `application/views/katalog/navbar.php`
+
+Pada tahap ini, saya melakukan perubahan pada file `application/views/katalog/navbar.php` dengan menambahkan beberapa kode PHP untuk mendukung fitur keranjang penyewa dan menampilkan pesan pemberitahuan pada halaman katalog.
+
+Kode yang ditambahkan memiliki beberapa fungsi, yaitu:
+
+1. **Menghitung jumlah mobil di keranjang:** Menambahkan variabel `$jumlahKeranjang` untuk menampung jumlah mobil yang ada di keranjang penyewa. Jika jumlahnya belum tersedia, maka nilai awal yang digunakan adalah `0`.
+2. **Mengambil pesan pemberitahuan transaksi:** Menambahkan variabel `$flashKatalog` untuk mengambil pesan dari session `flash_transaksi` yang akan digunakan pada halaman katalog.
+3. **Menghapus pesan dari session:** Menggunakan `unset()` agar pesan pemberitahuan tidak terus muncul ketika halaman dibuka kembali.
+
+Perubahan kode dilakukan pada bagian atas file `navbar.php`, sebelum penutup blok PHP (`?>`), tanpa menghapus kode yang sudah ada sebelumnya.
+
+**Hasil Pengujian:**
+
+1. File `application/views/katalog/navbar.php` berhasil diperbarui dengan penambahan kode P7.
+2. Variabel `$jumlahKeranjang` sudah disiapkan dengan nilai awal `0` apabila jumlah keranjang belum tersedia.
+3. Variabel `$flashKatalog` sudah disiapkan untuk mengambil pesan pemberitahuan dari session `flash_transaksi`.
+4. Pesan pemberitahuan dihapus dari session setelah diambil agar tidak ditampilkan berulang kali.
+
+**Kesimpulan:**
+
+Penambahan kode pada tahap D.1 berhasil mempersiapkan navbar untuk mendukung tampilan jumlah mobil di keranjang penyewa dan pesan pemberitahuan transaksi pada halaman katalog. Untuk menampilkan jumlah keranjang yang sebenarnya, variabel `$jumlahKeranjang` masih perlu mendapatkan data dari Controller.
