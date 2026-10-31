@@ -71,3 +71,35 @@ Hasil Pengujian:
 Pada tahap ini, route transaksi berhasil ditambahkan ke dalam file routes.php sesuai dengan instruksi modul. Route sudah disiapkan untuk menghubungkan URL transaksi/tambah dengan Controller transaksi.
 
 Namun, fitur penambahan kendaraan ke keranjang belum dapat diuji secara fungsional karena formulir pada halaman katalog dan halaman detail kendaraan belum diintegrasikan. Pengujian tersebut akan dilakukan pada tahap berikutnya setelah formulir, Controller, dan Model terhubung.
+
+## C.1. Mengubah Formulir pada Halaman Detail Kendaraan
+
+Pada tahap ini, saya melakukan perubahan pada file `application/views/katalog/detail.php`, khususnya pada bagian formulir **Add To Cart**. Perubahan ini bertujuan agar penyewa dapat menambahkan kendaraan ke keranjang melalui halaman detail kendaraan.
+
+Formulir yang sebelumnya menggunakan metode GET diubah menjadi metode **POST** dan diarahkan ke route `transaksi/tambah`. Data nomor polisi kendaraan dikirim melalui input tersembunyi (`no_plat`), sedangkan `return_to` digunakan untuk menentukan halaman asal setelah proses penambahan kendaraan dilakukan.
+
+Tampilan tombol disesuaikan dengan kondisi kendaraan dan status login penyewa, yaitu:
+
+1. **Penyewa belum login:** Sistem menampilkan informasi agar penyewa melakukan login atau registrasi, serta menyediakan tombol Login Penyewa dan Registrasi.
+2. **Kendaraan tidak tersedia:** Sistem menampilkan pesan bahwa kendaraan tidak dapat ditambahkan ke keranjang.
+3. **Penyewa sudah login:** Sistem menampilkan tombol Tambah ke Keranjang yang mengirim data kendaraan menggunakan metode POST ke route `transaksi/tambah`.
+
+**Hasil Pengujian:**
+
+Pengujian dilakukan melalui halaman detail kendaraan pada aplikasi localhost dengan beberapa kondisi berikut:
+
+1. Saat belum login sebagai penyewa, sistem menampilkan informasi login serta tombol Login Penyewa dan Registrasi.
+2. Saat kendaraan berstatus tidak tersedia, sistem menampilkan pesan bahwa kendaraan tidak dapat ditambahkan ke keranjang.
+3. Saat sudah login sebagai penyewa dan kendaraan tersedia, tombol Tambah ke Keranjang ditampilkan.
+
+**Kesimpulan:**
+
+Perubahan formulir pada halaman detail kendaraan membuat proses pengiriman data kendaraan ke Controller transaksi menjadi lebih terarah. Tombol penambahan kendaraan juga menyesuaikan status login penyewa dan ketersediaan kendaraan.
+
+**Git Commit:**
+
+```bash
+git add .
+git commit -m "Mengintegrasikan tombol keranjang pada halaman detail kendaraan"
+git push
+```
