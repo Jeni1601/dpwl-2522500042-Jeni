@@ -35,3 +35,22 @@ Berdasarkan hasil pengujian, aplikasi DPWL hasil pengembangan P6 siap digunakan 
 ### Kesimpulan
 
 Pada tahap B.1, Model transaksi dibuat sebagai fondasi untuk pengelolaan transaksi penyewaan kendaraan. Model menggunakan koneksi MySQLi serta menyediakan mekanisme penguncian proses untuk membantu mencegah benturan saat kode transaksi dibuat. Fitur penambahan kendaraan ke keranjang belum diuji pada tahap ini karena masih memerlukan integrasi Controller, route, dan proses penambahan kendaraan pada tahap berikutnya.
+
+### B.2. Membuat Controller Transaksi
+
+Pada tahap ini, saya membuat file `application/controllers/Transaksi_controller.php` yang berfungsi untuk mengatur proses transaksi penyewaan kendaraan, khususnya ketika penyewa ingin menambahkan kendaraan ke keranjang.
+
+Controller ini menggunakan `Transaksi_model.php` untuk menghubungkan proses permintaan dengan pengolahan data transaksi. Beberapa fungsi yang diterapkan yaitu:
+
+1. **__construct()**: Menginisialisasi Model transaksi agar dapat digunakan oleh Controller.
+2. **tambah()**: Memproses permintaan penambahan kendaraan ke keranjang dengan metode POST.
+3. **wajibLoginPenyewa()**: Memastikan pengguna sudah login sebagai penyewa sebelum melakukan transaksi.
+4. **wajibMetode()**: Memastikan permintaan menggunakan metode HTTP yang sesuai, yaitu POST.
+5. **redirectTambahDenganPesan()**: Mengarahkan penyewa kembali ke halaman katalog atau detail kendaraan dengan membawa pesan berhasil atau gagal.
+6. **pesanBisnisAman()**: Mengatur pesan kesalahan agar informasi yang ditampilkan kepada pengguna tetap aman dan mudah dipahami.
+
+**Hasil Pengujian:**
+
+Pada tahap ini, Controller transaksi berhasil dibuat sesuai dengan instruksi modul. Namun, pengujian fungsional penambahan kendaraan melalui halaman katalog belum dilakukan karena masih membutuhkan integrasi Model, Route, dan formulir katalog pada tahap berikutnya.
+
+Pengujian penambahan kendaraan ke keranjang akan dilakukan setelah seluruh komponen tersebut terintegrasi.
