@@ -54,3 +54,20 @@ Controller ini menggunakan `Transaksi_model.php` untuk menghubungkan proses perm
 Pada tahap ini, Controller transaksi berhasil dibuat sesuai dengan instruksi modul. Namun, pengujian fungsional penambahan kendaraan melalui halaman katalog belum dilakukan karena masih membutuhkan integrasi Model, Route, dan formulir katalog pada tahap berikutnya.
 
 Pengujian penambahan kendaraan ke keranjang akan dilakukan setelah seluruh komponen tersebut terintegrasi.
+
+## B.3. Menambahkan Route Transaksi
+
+Pada tahap ini, saya menambahkan route transaksi pada file application/config/routes.php. Route ini digunakan untuk menghubungkan URL transaksi/tambah dengan method tambah() yang terdapat pada Transaksi_controller.
+
+Kode route yang ditambahkan adalah:
+
+// Route P7 - Transaksi dan Keranjang
+$route['transaksi/tambah'] = 'Transaksi_controller/tambah';
+
+Route tersebut berfungsi untuk menerima permintaan dari formulir penambahan kendaraan ke keranjang. Permintaan dikirim menggunakan metode POST dan selanjutnya diproses oleh method tambah() pada Transaksi_controller.
+
+Hasil Pengujian:
+
+Pada tahap ini, route transaksi berhasil ditambahkan ke dalam file routes.php sesuai dengan instruksi modul. Route sudah disiapkan untuk menghubungkan URL transaksi/tambah dengan Controller transaksi.
+
+Namun, fitur penambahan kendaraan ke keranjang belum dapat diuji secara fungsional karena formulir pada halaman katalog dan halaman detail kendaraan belum diintegrasikan. Pengujian tersebut akan dilakukan pada tahap berikutnya setelah formulir, Controller, dan Model terhubung.
