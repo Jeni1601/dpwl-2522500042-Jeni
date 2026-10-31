@@ -96,10 +96,26 @@ Pengujian dilakukan melalui halaman detail kendaraan pada aplikasi localhost den
 
 Perubahan formulir pada halaman detail kendaraan membuat proses pengiriman data kendaraan ke Controller transaksi menjadi lebih terarah. Tombol penambahan kendaraan juga menyesuaikan status login penyewa dan ketersediaan kendaraan.
 
-**Git Commit:**
+### C.2. Mengubah Tombol Tambah ke Keranjang pada Halaman Katalog
 
-```bash
-git add .
-git commit -m "Mengintegrasikan tombol keranjang pada halaman detail kendaraan"
-git push
-```
+Pada tahap ini, saya melakukan perubahan pada file `application/views/katalog/index.php`, khususnya pada bagian tombol **Tambah ke Keranjang** di dalam perulangan `foreach ($daftarMobil as $mobil)`. Perubahan ini bertujuan agar tombol penambahan kendaraan dapat menyesuaikan status login penyewa dan ketersediaan kendaraan.
+
+Kondisi tombol yang diterapkan adalah sebagai berikut:
+
+1. **Penyewa sudah login dan kendaraan tersedia:** Tombol Tambah ke Keranjang aktif dan dapat digunakan untuk mengirim data kendaraan ke route `transaksi/tambah` menggunakan metode POST.
+2. **Penyewa belum login:** Tombol Tambah ke Keranjang ditampilkan dalam keadaan nonaktif.
+3. **Kendaraan tidak tersedia:** Tombol diganti menjadi Tidak Dapat Disewa dan dalam keadaan nonaktif.
+
+Formulir juga mengirimkan nomor polisi kendaraan melalui input tersembunyi (`no_plat`). Selain itu, nilai `return_to` diisi dengan `katalog` agar Controller mengetahui bahwa permintaan berasal dari halaman katalog.
+
+**Hasil Pengujian:**
+
+Pengujian dilakukan melalui halaman katalog kendaraan pada aplikasi localhost dengan beberapa kondisi berikut:
+
+1. Saat belum login sebagai penyewa, tombol Tambah ke Keranjang untuk kendaraan yang tersedia tampil dalam keadaan nonaktif.
+2. Setelah login sebagai penyewa, tombol Tambah ke Keranjang untuk kendaraan yang tersedia tampil aktif.
+3. Kendaraan yang berstatus tidak tersedia tetap tidak dapat disewa dan tombol penambahannya dalam keadaan nonaktif.
+
+**Kesimpulan:**
+
+Perubahan pada halaman katalog berhasil menyesuaikan tampilan tombol berdasarkan status login penyewa dan ketersediaan kendaraan. Pada tahap ini, pengujian hanya berfokus pada tampilan dan kondisi tombol. Proses pengiriman formulir dan penyimpanan transaksi ke keranjang akan diuji setelah Controller dan Model terintegrasi.
