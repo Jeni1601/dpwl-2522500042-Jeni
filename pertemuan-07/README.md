@@ -229,3 +229,27 @@ Pengujian dilakukan dengan membuka halaman keranjang melalui aplikasi localhost 
 **Kesimpulan:**
 
 Pembuatan halaman isi keranjang bertujuan agar penyewa dapat melihat dan memeriksa kendaraan yang telah dipilih sebelum melanjutkan ke proses checkout. Halaman ini menjadi bagian dari proses transaksi penyewaan kendaraan pada aplikasi DPWL.
+
+### F.2 Menambahkan Method keranjang() dan Lainnya pada Controller Transaksi 
+
+Pengujian dilakukan menggunakan dua akun penyewa dengan kondisi keranjang yang berbeda.
+
+**1. Login sebagai penyewa yang memiliki keranjang aktif**
+
+- Penyewa berhasil masuk ke halaman keranjang melalui menu keranjang.
+- Informasi transaksi berhasil ditampilkan, seperti kode transaksi, status keranjang, tanggal mulai, tanggal selesai, dan waktu pengambilan.
+- Jumlah kendaraan pada ikon keranjang di navbar menunjukkan angka **2**, sesuai dengan jumlah kendaraan yang ada di keranjang penyewa tersebut.
+
+**Hasil:** Berhasil. Halaman keranjang menampilkan informasi transaksi dan jumlah kendaraan sesuai dengan data penyewa yang sedang login.
+
+**2. Login sebagai penyewa yang belum memiliki keranjang aktif**
+
+- Penyewa berhasil masuk ke halaman katalog kendaraan.
+- Sistem menampilkan pesan **"Keranjang Anda masih kosong."**
+- Jumlah kendaraan pada ikon keranjang di navbar menunjukkan angka **0** karena penyewa belum memiliki keranjang aktif.
+
+**Hasil:** Berhasil. Sistem dapat mengenali penyewa yang belum memiliki keranjang aktif dan menampilkan jumlah kendaraan 0 pada navbar.
+
+**Kesimpulan Pengujian:**
+
+Berdasarkan pengujian yang telah dilakukan, fitur keranjang berhasil menampilkan data sesuai dengan akun penyewa yang sedang login. Jumlah kendaraan pada navbar juga menyesuaikan dengan isi keranjang masing-masing penyewa. Dengan demikian, data keranjang antarpenyewa tidak tercampur.
