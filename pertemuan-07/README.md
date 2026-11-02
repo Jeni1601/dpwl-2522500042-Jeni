@@ -276,3 +276,25 @@ Pengujian dilakukan dengan login menggunakan akun penyewa yang memiliki keranjan
 **Kesimpulan:**
 
 Berdasarkan pengujian yang telah dilakukan, seluruh fungsi pada halaman Konfirmasi Transaksi berhasil berjalan sesuai dengan ketentuan Modul P7. Informasi transaksi, rincian kendaraan, total biaya sewa, DP sebesar 30%, dan sisa pembayaran dapat ditampilkan dengan benar. Tombol Kembali ke Keranjang juga berfungsi dengan baik, serta sistem dapat membatasi akses berdasarkan kepemilikan transaksi dan status keranjang.
+
+### F.3.3. Pengujian Proses Checkout
+
+Pada tahap ini dilakukan pengujian proses checkout untuk memastikan transaksi penyewaan berhasil diajukan dan data transaksi serta pembayaran DP tersimpan ke dalam database.
+
+Pengujian dilakukan dengan membuka halaman Konfirmasi Transaksi, memeriksa rincian penyewaan, kemudian menekan tombol konfirmasi untuk mengajukan transaksi.
+
+**Hasil Pengujian:**
+
+1. Proses checkout berhasil dilakukan dan transaksi berhasil diajukan.
+2. Pada tabel `t_sewa`, data transaksi dengan kode `INV/20261102/01` berhasil tersimpan.
+3. Status transaksi pada tabel `t_sewa` berubah menjadi `diajukan`.
+4. Username penyewa yang tercatat adalah `Jeni_1601`.
+5. Pada tabel `t_bayar`, sistem berhasil menyimpan catatan pembayaran dengan jenis pembayaran `dp`.
+6. Metode pembayaran yang tercatat adalah `transfer`.
+7. Nominal pembayaran DP yang tersimpan adalah **Rp444.000**.
+8. Status pembayaran tercatat `pending` karena pembayaran belum diverifikasi oleh admin.
+9. Kode transaksi pada tabel `t_bayar` sesuai dengan kode transaksi pada tabel `t_sewa`.
+
+**Kesimpulan:**
+
+Berdasarkan pengujian yang telah dilakukan, proses checkout berhasil berjalan. Data transaksi berhasil disimpan ke tabel `t_sewa` dengan status `diajukan`, sedangkan data pembayaran DP berhasil disimpan ke tabel `t_bayar` dengan metode transfer dan status `pending`. Dengan demikian, proses pengajuan transaksi dan pencatatan pembayaran DP berhasil dilakukan sesuai dengan pengujian Modul P7.
