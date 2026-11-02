@@ -142,3 +142,23 @@ Perubahan kode dilakukan pada bagian atas file `navbar.php`, sebelum penutup blo
 **Kesimpulan:**
 
 Penambahan kode pada tahap D.1 berhasil mempersiapkan navbar untuk mendukung tampilan jumlah mobil di keranjang penyewa dan pesan pemberitahuan transaksi pada halaman katalog. Untuk menampilkan jumlah keranjang yang sebenarnya, variabel `$jumlahKeranjang` masih perlu mendapatkan data dari Controller.
+
+### D.2.2 Memperbarui Katalog_controller.php
+
+Pada tahap ini, dilakukan perubahan pada file `application/controllers/Katalog_controller.php` dengan menambahkan integrasi `Transaksi_model.php`. Tujuannya adalah agar sistem dapat menghitung jumlah kendaraan yang sudah dimasukkan ke dalam keranjang berdasarkan akun penyewa yang sedang login.
+
+Perubahan dilakukan dengan menambahkan pemanggilan model transaksi, membuat properti `$transaksiModel`, serta melakukan inisialisasi objek `Transaksi_model` pada bagian constructor.
+
+Selanjutnya, method `index()` dan `detail()` diperbarui agar dapat mengirimkan data `jumlahKeranjang` ke halaman View. Jika penyewa belum login, jumlah keranjang akan bernilai 0. Jika penyewa sudah login, sistem akan menghitung jumlah kendaraan berdasarkan akun penyewa tersebut.
+
+**Hasil Pengujian:**
+
+1. Membuka halaman katalog kendaraan melalui localhost. Halaman katalog berhasil ditampilkan.
+2. Membuka halaman detail kendaraan. Informasi kendaraan berhasil ditampilkan dengan benar.
+3. Mengakses halaman katalog ketika belum login sebagai penyewa. Halaman tetap dapat dibuka dan jumlah keranjang bernilai 0.
+4. Login sebagai penyewa, kemudian membuka halaman katalog dan detail kendaraan. Jumlah keranjang ditampilkan sesuai dengan data keranjang milik akun penyewa.
+5. Jika keranjang masih kosong, jumlah yang ditampilkan adalah 0.
+
+**Kesimpulan:**
+
+Setelah perubahan dilakukan, `Katalog_controller.php` sudah terintegrasi dengan `Transaksi_model.php`. Dengan demikian, halaman katalog dan detail kendaraan dapat menerima data jumlah keranjang sesuai dengan akun penyewa yang sedang login. Perubahan ini juga membantu agar jumlah keranjang yang ditampilkan pada navbar tidak mengambil data dari akun penyewa lain.VV
