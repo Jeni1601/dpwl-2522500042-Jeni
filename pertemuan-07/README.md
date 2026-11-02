@@ -181,7 +181,17 @@ Selanjutnya, variabel `jumlahKeranjang` ditambahkan ke dalam array data pada pem
 
 Perubahan pada nomor 7 membuat tampilan navbar di halaman profil tetap konsisten karena jumlah kendaraan dalam keranjang tetap dikirim, termasuk ketika terjadi kesalahan pada proses pengolahan data profil.
 
-### Hasil Pengujian E.1
+### E.1. Menambahkan Method `tambahKeKeranjang()`
+
+Pada tahap ini, saya menambahkan method `tambahKeKeranjang()` pada file `application/models/Transaksi_model.php`. Method ini berfungsi untuk memproses penambahan kendaraan ke dalam keranjang penyewaan milik penyewa yang sedang login.
+
+Sebelum menambahkan method tersebut, saya juga menambahkan beberapa helper yang diperlukan, yaitu `namaKunciKeranjang()`, `kunciKendaraan()`, `hitungHariSewa()`, dan helper untuk menormalisasi waktu pengambilan. Helper tersebut digunakan untuk mengelola kunci keranjang, memeriksa ketersediaan kendaraan, serta menghitung durasi penyewaan.
+
+Method `tambahKeKeranjang()` bekerja dengan memeriksa identitas penyewa dan nomor kendaraan terlebih dahulu. Selanjutnya, sistem memeriksa apakah kendaraan tersedia dan mencari keranjang aktif milik penyewa. Jika keranjang belum tersedia, sistem akan membuat transaksi baru. Jika sudah ada, kendaraan akan ditambahkan ke keranjang yang sama.
+
+Data transaksi utama disimpan pada tabel `t_sewa`, sedangkan kendaraan yang dipilih disimpan pada tabel `t_pilih` dengan menggunakan `kode_sewa` yang sama. Proses penyimpanan menggunakan transaksi database agar data tetap konsisten apabila terjadi kesalahan.
+
+**Hasil Pengujian** 
 
 Berdasarkan pengujian yang telah dilakukan, fitur penambahan kendaraan ke keranjang berhasil berjalan sesuai dengan yang diharapkan. Berikut hasil dari keenam pengujian:
 
