@@ -205,3 +205,27 @@ Berdasarkan pengujian yang telah dilakukan, fitur penambahan kendaraan ke keranj
 **Kesimpulan Pengujian:**
 
 Berdasarkan keenam pengujian tersebut, fitur `tambahKeKeranjang()` berhasil diterapkan. Sistem dapat menyimpan data transaksi dan detail kendaraan ke database, menggunakan keranjang yang sama untuk beberapa kendaraan, serta mencegah penambahan kendaraan yang duplikat atau tidak tersedia.
+
+### F.1. Membuat Halaman Isi Keranjang
+
+Pada tahap F.1, saya membuat halaman isi keranjang pada file `application/views/transaksi/keranjang.php`. Halaman ini digunakan untuk menampilkan informasi transaksi penyewaan kendaraan yang sebelumnya sudah ditambahkan oleh penyewa melalui halaman katalog.
+
+Informasi yang ditampilkan meliputi kode transaksi, status transaksi, tanggal mulai dan selesai sewa, waktu pengambilan kendaraan, daftar kendaraan yang dipilih, harga sewa per hari, durasi sewa, subtotal, dan total biaya sewa.
+
+Selain menampilkan informasi transaksi, halaman ini juga menyediakan beberapa fitur, yaitu:
+
+1. **Update Keranjang**, digunakan untuk memperbarui tanggal mulai, tanggal selesai, dan waktu pengambilan kendaraan.
+2. **Daftar Kendaraan**, menampilkan kendaraan yang sudah dimasukkan ke dalam keranjang beserta nomor polisi, harga sewa, durasi, dan subtotal.
+3. **Lanjut Pilih Kendaraan**, digunakan untuk kembali ke halaman katalog.
+4. **Aksi Kendaraan**, menyediakan tombol untuk menghapus kendaraan dari keranjang.
+5. **Lanjut Checkout**, menyediakan akses untuk melanjutkan proses pengajuan transaksi.
+
+Pada halaman ini juga digunakan fungsi `htmlspecialchars()` untuk melakukan escape terhadap data sebelum ditampilkan ke HTML agar lebih aman. Selain itu, fungsi `number_format()` digunakan untuk menampilkan harga dalam format Rupiah.
+
+**Hasil Pengujian:**
+
+Pengujian dilakukan dengan membuka halaman keranjang melalui aplikasi localhost menggunakan akun penyewa. Pemeriksaan dilakukan terhadap tampilan informasi transaksi, periode sewa, waktu pengambilan, daftar kendaraan, harga sewa, durasi, subtotal, dan total biaya sewa.
+
+**Kesimpulan:**
+
+Pembuatan halaman isi keranjang bertujuan agar penyewa dapat melihat dan memeriksa kendaraan yang telah dipilih sebelum melanjutkan ke proses checkout. Halaman ini menjadi bagian dari proses transaksi penyewaan kendaraan pada aplikasi DPWL.
