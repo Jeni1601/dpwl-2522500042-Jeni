@@ -253,3 +253,26 @@ Pengujian dilakukan menggunakan dua akun penyewa dengan kondisi keranjang yang b
 **Kesimpulan Pengujian:**
 
 Berdasarkan pengujian yang telah dilakukan, fitur keranjang berhasil menampilkan data sesuai dengan akun penyewa yang sedang login. Jumlah kendaraan pada navbar juga menyesuaikan dengan isi keranjang masing-masing penyewa. Dengan demikian, data keranjang antarpenyewa tidak tercampur.
+
+### F.3.2. Pengujian Tampilan Konfirmasi Checkout
+
+Pada tahap ini dilakukan pengujian terhadap halaman Konfirmasi Transaksi untuk memastikan seluruh informasi penyewaan dan perhitungan pembayaran ditampilkan dengan benar sebelum transaksi diajukan kepada admin.
+
+Pengujian dilakukan dengan login menggunakan akun penyewa yang memiliki keranjang berisi kendaraan. Selanjutnya, penyewa membuka halaman keranjang dan menekan tombol **Checkout / Lihat Konfirmasi**.
+
+**Hasil Pengujian:**
+
+| No. | Pengujian | Hasil |
+|---|---|---|
+| 1 | Membuka halaman Konfirmasi Transaksi melalui tombol Checkout / Lihat Konfirmasi. | Berhasil |
+| 2 | Memastikan kode transaksi ditampilkan sesuai dengan keranjang. | Berhasil |
+| 3 | Memastikan tanggal mulai, tanggal selesai, dan waktu pengambilan ditampilkan. | Berhasil |
+| 4 | Memastikan daftar kendaraan, harga per hari, durasi, subtotal, dan total sewa ditampilkan. | Berhasil |
+| 5 | Memastikan perhitungan DP sebesar 30% dari total sewa. | Berhasil |
+| 6 | Memastikan sisa pembayaran setelah dikurangi DP ditampilkan dengan benar. | Berhasil |
+| 7 | Menekan tombol Kembali ke Keranjang dan memastikan kode transaksi tetap sama. | Berhasil |
+| 8 | Memastikan transaksi milik penyewa lain atau transaksi yang tidak lagi berstatus keranjang tidak dapat diakses. | Berhasil |
+
+**Kesimpulan:**
+
+Berdasarkan pengujian yang telah dilakukan, seluruh fungsi pada halaman Konfirmasi Transaksi berhasil berjalan sesuai dengan ketentuan Modul P7. Informasi transaksi, rincian kendaraan, total biaya sewa, DP sebesar 30%, dan sisa pembayaran dapat ditampilkan dengan benar. Tombol Kembali ke Keranjang juga berfungsi dengan baik, serta sistem dapat membatasi akses berdasarkan kepemilikan transaksi dan status keranjang.
