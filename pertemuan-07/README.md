@@ -162,3 +162,21 @@ Selanjutnya, method `index()` dan `detail()` diperbarui agar dapat mengirimkan d
 **Kesimpulan:**
 
 Setelah perubahan dilakukan, `Katalog_controller.php` sudah terintegrasi dengan `Transaksi_model.php`. Dengan demikian, halaman katalog dan detail kendaraan dapat menerima data jumlah keranjang sesuai dengan akun penyewa yang sedang login. Perubahan ini juga membantu agar jumlah keranjang yang ditampilkan pada navbar tidak mengambil data dari akun penyewa lain.VV
+
+### D.2.3. Memperbarui `Penyewa_controller.php` 
+
+Pada tahap ini, saya memperbarui method `renderProfilError()` pada file `application/controllers/Penyewa_controller.php`. Perubahan dilakukan agar jumlah kendaraan yang ada di keranjang tetap dikirim ke halaman profil penyewa meskipun terjadi kesalahan saat memproses atau memvalidasi data profil.
+
+Saya menambahkan proses untuk mengambil username penyewa dari session `penyewa_user_plg`, kemudian menghitung jumlah kendaraan dalam keranjang menggunakan method `getJumlahMobilKeranjang()` dari `Transaksi_model`. Jika session penyewa kosong, jumlah keranjang akan diatur menjadi 0.
+
+Selanjutnya, variabel `jumlahKeranjang` ditambahkan ke dalam array data pada pemanggilan View `penyewa/profil`. Dengan perubahan ini, navbar tetap dapat menampilkan jumlah kendaraan dalam keranjang meskipun halaman profil sedang menampilkan pesan kesalahan.
+
+**Hasil Pengujian:**
+- Method `renderProfilError()` mengirimkan data jumlah keranjang ke halaman profil.
+- Jika penyewa memiliki kendaraan dalam keranjang, jumlahnya ditampilkan sesuai data akun penyewa.
+- Jika tidak ada kendaraan dalam keranjang, jumlah yang ditampilkan adalah 0.
+- Pesan kesalahan pada halaman profil tetap dapat ditampilkan tanpa menghilangkan jumlah keranjang.
+
+**Kesimpulan:**
+
+Perubahan pada nomor 7 membuat tampilan navbar di halaman profil tetap konsisten karena jumlah kendaraan dalam keranjang tetap dikirim, termasuk ketika terjadi kesalahan pada proses pengolahan data profil.
