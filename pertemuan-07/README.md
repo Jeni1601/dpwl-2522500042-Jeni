@@ -180,3 +180,18 @@ Selanjutnya, variabel `jumlahKeranjang` ditambahkan ke dalam array data pada pem
 **Kesimpulan:**
 
 Perubahan pada nomor 7 membuat tampilan navbar di halaman profil tetap konsisten karena jumlah kendaraan dalam keranjang tetap dikirim, termasuk ketika terjadi kesalahan pada proses pengolahan data profil.
+
+### Hasil Pengujian E.1
+
+Berdasarkan pengujian yang telah dilakukan, fitur penambahan kendaraan ke keranjang berhasil berjalan sesuai dengan yang diharapkan. Berikut hasil dari keenam pengujian:
+
+1. **Pengujian menambahkan kendaraan ke keranjang:** Berhasil. Kendaraan yang tersedia dapat ditambahkan ke keranjang melalui halaman katalog.
+2. **Pengujian penyimpanan data transaksi:** Berhasil. Data transaksi tersimpan pada tabel `t_sewa` di database.
+3. **Pengujian penyimpanan detail kendaraan:** Berhasil. Kendaraan yang dipilih tersimpan pada tabel `t_pilih` dengan `kode_sewa` yang sesuai.
+4. **Pengujian menambahkan kendaraan lain:** Berhasil. Kendaraan lain dapat ditambahkan ke keranjang yang sama selama transaksi masih berstatus keranjang.
+5. **Pengujian kendaraan yang sama:** Berhasil. Sistem menolak penambahan kendaraan yang sama agar tidak terjadi data duplikat dalam satu keranjang.
+6. **Pengujian ketersediaan kendaraan:** Berhasil. Sistem hanya mengizinkan kendaraan dengan status tersedia untuk ditambahkan ke keranjang.
+
+**Kesimpulan Pengujian:**
+
+Berdasarkan keenam pengujian tersebut, fitur `tambahKeKeranjang()` berhasil diterapkan. Sistem dapat menyimpan data transaksi dan detail kendaraan ke database, menggunakan keranjang yang sama untuk beberapa kendaraan, serta mencegah penambahan kendaraan yang duplikat atau tidak tersedia.
