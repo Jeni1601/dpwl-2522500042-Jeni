@@ -37,27 +37,41 @@ search"></i>
         </form> 
         <!-- /.search form --> 
  
-        <!-- Sidebar Menu --> 
-        <ul class="sidebar-menu" data-widget="tree"> 
-          <li class="header">MENU ADMIN</li> 
-          <li class="active"> 
-            <a href="<?= htmlspecialchars(site_url('admin'), ENT_QUOTES, 'UTF-8') ?>"> 
-              <i class="fa fa-dashboard"></i> <span>Dashboard</span> 
-            </a> 
-          </li> 
-          <li> 
-            <a href="<?= htmlspecialchars(site_url('admin/madmin'), ENT_QUOTES, 'UTF-8') ?>"> 
-              <i class="fa fa-users"></i> <span>Manajemen Admin</span> 
-            </a> 
-          </li> 
-          <li>
-            <a href="<?= htmlspecialchars(site_url('admin/mobil'), ENT_QUOTES, 'UTF-8') ?>">
-              <i class="fa fa-car"></i> <span>Manajemen Kendaraan</span>
-            </a>
-          </li>
-        </ul> 
- 
-        <!-- /.sidebar-menu --> 
+        
+<!-- Sidebar Menu -->
+<ul class="sidebar-menu" data-widget="tree">
+    <li class="header">MENU ADMIN</li>
+
+    <li class="active">
+        <a href="<?= htmlspecialchars(site_url('admin'), ENT_QUOTES, 'UTF-8') ?>">
+            <i class="fa fa-dashboard"></i>
+            <span>Dashboard</span>
+        </a>
+    </li>
+
+    <li>
+        <a href="<?= htmlspecialchars(site_url('admin/madmin'), ENT_QUOTES, 'UTF-8') ?>">
+            <i class="fa fa-users"></i>
+            <span>Manajemen Admin</span>
+        </a>
+    </li>
+
+    <li>
+        <a href="<?= htmlspecialchars(site_url('admin/mobil'), ENT_QUOTES, 'UTF-8') ?>">
+            <i class="fa fa-car"></i>
+            <span>Manajemen Kendaraan</span>
+        </a>
+    </li>
+
+    <li>
+        <a href="<?= htmlspecialchars(site_url('admin/penyewa'), ENT_QUOTES, 'UTF-8') ?>">
+            <i class="fa fa-users"></i>
+            <span>Manajemen Penyewa</span>
+        </a>
+    </li>
+</ul>
+<!-- /.sidebar-menu -->
+
       </section> 
       <!-- /.sidebar --> 
     </aside> 

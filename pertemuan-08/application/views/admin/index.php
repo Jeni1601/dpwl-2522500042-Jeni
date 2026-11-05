@@ -257,6 +257,12 @@ $adminlte_url = 'http://localhost/template/AdminLTE-2.4.18/';
             <span>Manajemen Kendaraan</span>
         </a>
     </li>
+    <li>
+        <a href="<?= htmlspecialchars(site_url('admin/mobil'), ENT_QUOTES, 'UTF-8') ?>">
+            <i class="fa fa-car"></i>
+            <span>Manajemen Penyewa</span>
+        </a>
+    </li>
 </ul>
 <!-- /.sidebar-menu -->
 

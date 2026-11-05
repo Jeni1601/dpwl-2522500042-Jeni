@@ -19,12 +19,17 @@ $route['admin/madmin/tambah'] = 'madmin_controller/tambah';
 $route['admin/madmin/ubah/(:any)'] = 'madmin_controller/ubah/$1';
 $route['admin/madmin/hapus/(:any)'] = 'madmin_controller/hapus/$1';
 
-// Route P5 
-// dari href(menu), diproses ke Mobil_controller dengan mengerjakan method index() yang memanggil admin\mobil_view 
+// Route P5 - Manajemen Kendaraan
 $route['admin/mobil'] = 'Mobil_controller/index';
 $route['admin/mobil/tambah'] = 'Mobil_controller/tambah';
 $route['admin/mobil/ubah/(:any)'] = 'Mobil_controller/ubah/$1';
 $route['admin/mobil/hapus/(:any)'] = 'Mobil_controller/hapus/$1';
+
+// Route P8 - Manajemen Data Penyewa
+$route['admin/penyewa'] = 'Penyewa_controller/index';
+$route['admin/penyewa/tambah'] = 'Penyewa_controller/tambah';
+$route['admin/penyewa/ubah/(:any)'] = 'Penyewa_controller/ubah/$1';
+$route['admin/penyewa/hapus/(:any)'] = 'Penyewa_controller/hapus/$1';
 
 // Route P6 
 $route['katalog'] = 'Katalog_controller/index';
