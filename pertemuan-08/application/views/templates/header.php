@@ -1,5 +1,8 @@
 <?php
 $adminlte_url = 'http://localhost/template/AdminLTE-2.4.18/';
+
+// Mencegah error jika username belum dikirim dari Controller.
+$username = $username ?? 'Admin';
 ?>
 <!DOCTYPE html>
 <html>
@@ -9,8 +12,8 @@ $adminlte_url = 'http://localhost/template/AdminLTE-2.4.18/';
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>AdminLTE 2 | Starter</title>
   <!-- Tell the browser to be responsive to screen width -->
-  <meta con tent="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
-    name="viewport">
+  <meta name="viewport"
+  content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <link rel="stylesheet"
     href="<?= htmlspecialchars(
             $adminlte_url . 'bower_components/bootstrap/dist/css/bootstrap.min.css',
