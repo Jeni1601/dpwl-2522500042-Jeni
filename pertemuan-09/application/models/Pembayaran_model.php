@@ -1,3 +1,4 @@
+
 <?php
 
 class Pembayaran_model
@@ -31,7 +32,9 @@ class Pembayaran_model
                 JOIN t_sewa s
                     ON b.kode_sewa = s.kode_sewa
                 WHERE s.user_plg = ?
-                ORDER BY b.tgl_wkt_byr DESC";
+                ORDER BY
+                    b.tgl_wkt_byr DESC,
+                    b.kode_bayar DESC";
 
         $stmt = $this->db->prepare($sql);
 
@@ -130,7 +133,8 @@ class Pembayaran_model
                     AND EXISTS (
                         SELECT 1
                         FROM t_sewa
-                        WHERE t_sewa.kode_sewa = t_bayar.kode_sewa
+                        WHERE t_sewa.kode_sewa =
+                                t_bayar.kode_sewa
                             AND t_sewa.user_plg = ?
                     )";
 
@@ -156,7 +160,7 @@ class Pembayaran_model
         return $success;
     }
 
-    // P9: Mengambil seluruh data pembayaran untuk Admin
+    // P9: Mengambil seluruh pembayaran yang belum diterima Admin
     public function getAll(): array
     {
         $sql = "SELECT
@@ -172,6 +176,7 @@ class Pembayaran_model
                     s.user_plg,
                     s.tgl_mulai,
                     s.tgl_selesai,
+                    s.wkt_ambil,
                     s.status_sewa,
                     p.nm_lngkp
                 FROM t_bayar b
@@ -179,7 +184,11 @@ class Pembayaran_model
                     ON b.kode_sewa = s.kode_sewa
                 LEFT JOIN t_penyewa p
                     ON s.user_plg = p.user_plg
-                ORDER BY b.tgl_wkt_byr DESC";
+                WHERE b.sttus_byr <> 'valid'
+                    OR b.sttus_byr IS NULL
+                ORDER BY
+                    b.tgl_wkt_byr DESC,
+                    b.kode_bayar DESC";
 
         $stmt = $this->db->prepare($sql);
 
@@ -206,8 +215,9 @@ class Pembayaran_model
     }
 
     // P9: Mengambil detail pembayaran untuk Admin
-    public function getDetailAdmin(string $kodeBayar): ?array
-    {
+    public function getDetailAdmin(
+        string $kodeBayar
+    ): ?array {
         $sql = "SELECT
                     b.kode_bayar,
                     b.tgl_wkt_byr,
@@ -260,41 +270,43 @@ class Pembayaran_model
     }
 
     // P9: Verifikasi pembayaran oleh Admin
-   public function verifikasi(
-    string $kodeBayar,
-    string $status
-): bool {
-    if (!in_array($status, ['valid', 'invalid'], true)) {
-        return false;
-    }
+    public function verifikasi(
+        string $kodeBayar,
+        string $status
+    ): bool {
+        if (!in_array(
+            $status,
+            ['valid', 'invalid'],
+            true
+        )) {
+            return false;
+        }
 
-    $sql = "UPDATE t_bayar
-            SET sttus_byr = ?,
-                tgl_wkt_ver = NOW()
-            WHERE kode_bayar = ?
-                AND sttus_byr = 'pending'";
+        $sql = "UPDATE t_bayar
+                SET sttus_byr = ?,
+                    tgl_wkt_ver = NOW()
+                WHERE kode_bayar = ?
+                    AND sttus_byr = 'pending'";
 
-    $stmt = $this->db->prepare($sql);
+        $stmt = $this->db->prepare($sql);
 
-    if (!$stmt) {
-        throw new RuntimeException(
-            'Query verifikasi pembayaran gagal disiapkan.'
+        if (!$stmt) {
+            throw new RuntimeException(
+                'Query verifikasi pembayaran gagal disiapkan.'
+            );
+        }
+
+        $stmt->bind_param(
+            'ss',
+            $status,
+            $kodeBayar
         );
+
+        $success = $stmt->execute();
+        $affectedRows = $stmt->affected_rows;
+
+        $stmt->close();
+
+        return $success && $affectedRows === 1;
     }
-
-    $stmt->bind_param(
-        'ss',
-        $status,
-        $kodeBayar
-    );
-
-    $success = $stmt->execute();
-
-    // Pastikan benar-benar ada satu data yang diperbarui.
-    $affectedRows = $stmt->affected_rows;
-
-    $stmt->close();
-
-    return $success && $affectedRows === 1;
-}
 }

@@ -92,9 +92,20 @@ class Pembayaran_controller extends Controller
     // =====================================================
     // P9: UPLOAD BUKTI PEMBAYARAN PENYEWA
     // =====================================================
-    public function uploadBukti(string $kodeBayar): void
-    {
-        $userPlg = $this->wajibLoginPenyewa();
+    public function uploadBukti(): void
+{
+    $userPlg = $this->wajibLoginPenyewa();
+
+    // Mengambil kode pembayaran dari query string.
+    $kodeBayar = trim(
+        (string) ($_GET['kode_bayar'] ?? '')
+    );
+
+    // Memastikan kode pembayaran tersedia.
+    if ($kodeBayar === '') {
+        http_response_code(400);
+        exit('Kode pembayaran tidak tersedia.');
+    }
 
         // Upload bukti hanya melalui POST.
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -151,7 +162,12 @@ class Pembayaran_controller extends Controller
         }
 
         // Membuat folder upload jika belum tersedia.
-        $folderUpload = ROOTPATH . 'uploads/pembayaran/';
+$folderUpload = dirname(__DIR__, 2)
+    . DIRECTORY_SEPARATOR
+    . 'uploads'
+    . DIRECTORY_SEPARATOR
+    . 'pembayaran'
+    . DIRECTORY_SEPARATOR;
 
         if (
             !is_dir($folderUpload)
@@ -404,18 +420,18 @@ if ($berhasil) {
     // =====================================================
     // P9: REDIRECT KE DETAIL PEMBAYARAN PENYEWA
     // =====================================================
-    private function redirectDetailPenyewa(string $kodeBayar): void
-    {
-        header(
-            'Location: '
-            . site_url(
-                'pembayaran/detail/'
-                . rawurlencode($kodeBayar)
-            )
-        );
+   private function redirectDetailPenyewa(string $kodeBayar): void
+{
+    header(
+        'Location: '
+        . site_url(
+            'pembayaran/detail?kode_bayar='
+            . rawurlencode($kodeBayar)
+        )
+    );
 
-        exit;
-    }
+    exit;
+}
 
     // =====================================================
     // P9: REDIRECT KE DETAIL PEMBAYARAN ADMIN

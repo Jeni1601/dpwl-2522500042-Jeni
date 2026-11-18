@@ -88,3 +88,23 @@ Pada tahap ini, saya memperbaiki tombol Detail pada halaman Pembayaran Saya yang
 Perbaikan dilakukan dengan menggunakan query string untuk mengirim kode pembayaran dari halaman daftar pembayaran ke controller. Controller kemudian mengambil kode pembayaran dari query string dan menampilkan detail pembayaran sesuai dengan transaksi milik penyewa yang sedang login.
 
 **Hasil pengujian:** tombol Detail berhasil membuka halaman Detail Pembayaran dan menampilkan kode pembayaran, kode sewa, tanggal pembayaran, jenis pembayaran, nominal, metode pembayaran, status pembayaran, status sewa, serta fitur upload bukti pembayaran. Pengujian berhasil dilakukan tanpa mengubah struktur database.
+
+### Upload Bukti Pembayaran
+
+Pada tahap ini dilakukan perbaikan fitur upload foto bukti pembayaran pada halaman detail pembayaran penyewa. Sebelumnya, fitur upload mengalami error karena konstanta `ROOTPATH` belum tersedia pada project. Oleh karena itu, lokasi folder upload diperbaiki dengan menggunakan path direktori project.
+
+Fitur upload bukti pembayaran menggunakan metode POST dan `multipart/form-data`. File yang dapat diunggah berupa JPG, JPEG, PNG, atau WEBP dengan ukuran maksimal 5 MB. File bukti pembayaran disimpan pada folder `uploads/pembayaran/`, sedangkan nama file disimpan ke database.
+
+Pengujian dilakukan dengan mengunggah foto bukti transfer melalui halaman detail pembayaran penyewa. Hasil pengujian menunjukkan bahwa foto bukti berhasil diunggah, tersimpan pada folder upload, dan dapat ditampilkan pada detail pembayaran penyewa maupun admin.
+
+**Hasil pengujian: Berhasil.**
+
+### Manajemen Pembayaran Admin
+
+Pada tahap ini dilakukan perbaikan fitur Manajemen Pembayaran Admin. Daftar pembayaran tidak lagi dibatasi hanya tiga data, tetapi menampilkan seluruh pembayaran dari penyewa yang masih perlu diproses oleh Admin.
+
+Ketika penyewa melakukan checkout, data pembayaran otomatis masuk ke daftar Manajemen Pembayaran Admin, meskipun penyewa belum mengunggah bukti pembayaran. Setelah penyewa mengunggah bukti, Admin dapat melihat detail pembayaran dan melakukan verifikasi.
+
+Apabila Admin menerima pembayaran dan mengubah status menjadi Valid, pembayaran tersebut otomatis hilang dari daftar pembayaran Admin yang masih perlu diproses. Data pembayaran tetap tersimpan di database sehingga riwayat pembayaran penyewa tidak terhapus.
+
+**Hasil pengujian:** seluruh alur checkout, tampilnya pembayaran di Admin, upload bukti, verifikasi pembayaran, dan hilangnya pembayaran berstatus Valid dari daftar Admin berhasil dilakukan.

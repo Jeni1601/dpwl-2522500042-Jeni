@@ -245,11 +245,11 @@ $bolehUpload = in_array($status, ['pending', 'invalid'], true)
 
                             <form
                                 action="<?= $e(
-                                    site_url(
-                                        'pembayaran_controller/uploadBukti/'
-                                        . rawurlencode($kodeBayar)
-                                    )
-                                ) ?>"
+    site_url(
+        'pembayaran/upload?kode_bayar='
+        . rawurlencode($kodeBayar)
+    )
+) ?>"
                                 method="post"
                                 enctype="multipart/form-data">
 

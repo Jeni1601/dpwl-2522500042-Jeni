@@ -49,7 +49,7 @@ $route['transaksi/checkout'] = 'Transaksi_controller/checkout';
 // Route P9 - Pembayaran Penyewa
 $route['pembayaran'] = 'Pembayaran_controller/index';
 $route['pembayaran/detail'] = 'Pembayaran_controller/detail';
-$route['pembayaran/upload/(:any)'] = 'Pembayaran_controller/uploadBukti/$1';
+$route['pembayaran/upload'] = 'Pembayaran_controller/uploadBukti';
 
 // Route P9 - Pembayaran Admin
 $route['admin/pembayaran'] = 'Pembayaran_controller/indexAdmin';
