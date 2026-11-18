@@ -34,3 +34,15 @@ Halaman dibuat menggunakan komponen Bootstrap dan mengikuti tampilan halaman kat
 Disediakan juga tombol Detail untuk menuju halaman detail pembayaran. Integrasi routes dan pengujian halaman akan dilanjutkan pada tahapan berikutnya.
 
 Hasil: Halaman daftar pembayaran penyewa berhasil dibuat dan syntax PHP berhasil diperiksa. Integrasi ke browser akan dilakukan setelah routes dan halaman detail pembayaran tersedia.
+
+## Tahap 7: Membuat Halaman Detail dan Upload Bukti Pembayaran
+
+Pada tahap ini dilakukan pembuatan halaman detail pembayaran penyewa pada file application/views/pembayaran/detail.php. Halaman ini digunakan untuk menampilkan informasi pembayaran secara lebih lengkap, seperti kode pembayaran, kode sewa, tanggal pembayaran, jenis pembayaran, nominal, metode pembayaran, status pembayaran, dan tanggal verifikasi.
+
+Selain menampilkan detail pembayaran, dibuat juga fitur upload bukti pembayaran untuk penyewa yang menggunakan metode transfer. File bukti pembayaran dibatasi maksimal 5 MB dengan format JPG, JPEG, PNG, atau WEBP. File disimpan pada folder uploads/pembayaran/ dengan nama file unik.
+
+Fitur upload hanya dapat dilakukan oleh penyewa yang memiliki transaksi tersebut dan pembayaran dengan status pending atau invalid. Setelah bukti pembayaran berhasil diunggah, status pembayaran akan dikembalikan menjadi pending agar Admin dapat melakukan verifikasi ulang.
+
+Pada controller Pembayaran_controller.php, ditambahkan fungsi uploadBukti() untuk menangani proses upload, validasi file, penyimpanan file, dan pembaruan data bukti pembayaran pada database. Fungsi detail() juga diperbarui untuk menampilkan pesan hasil upload.
+
+Hasil: Halaman detail pembayaran dan proses upload bukti pembayaran berhasil dibuat. Pemeriksaan syntax PHP dilakukan pada file view dan controller. Pengujian melalui browser akan dilanjutkan setelah integrasi routes pada tahap berikutnya.
