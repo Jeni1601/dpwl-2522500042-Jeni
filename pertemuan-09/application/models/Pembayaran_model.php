@@ -260,38 +260,41 @@ class Pembayaran_model
     }
 
     // P9: Verifikasi pembayaran oleh Admin
-    public function verifikasi(
-        string $kodeBayar,
-        string $status
-    ): bool {
-        if (!in_array($status, ['valid', 'invalid'], true)) {
-            return false;
-        }
-
-        $sql = "UPDATE t_bayar
-                SET sttus_byr = ?,
-                    tgl_wkt_ver = NOW()
-                WHERE kode_bayar = ?
-                    AND sttus_byr = 'pending'";
-
-        $stmt = $this->db->prepare($sql);
-
-        if (!$stmt) {
-            throw new RuntimeException(
-                'Query verifikasi pembayaran gagal disiapkan.'
-            );
-        }
-
-        $stmt->bind_param(
-            'ss',
-            $status,
-            $kodeBayar
-        );
-
-        $success = $stmt->execute();
-
-        $stmt->close();
-
-        return $success;
+   public function verifikasi(
+    string $kodeBayar,
+    string $status
+): bool {
+    if (!in_array($status, ['valid', 'invalid'], true)) {
+        return false;
     }
+
+    $sql = "UPDATE t_bayar
+            SET sttus_byr = ?,
+                tgl_wkt_ver = NOW()
+            WHERE kode_bayar = ?
+                AND sttus_byr = 'pending'";
+
+    $stmt = $this->db->prepare($sql);
+
+    if (!$stmt) {
+        throw new RuntimeException(
+            'Query verifikasi pembayaran gagal disiapkan.'
+        );
+    }
+
+    $stmt->bind_param(
+        'ss',
+        $status,
+        $kodeBayar
+    );
+
+    $success = $stmt->execute();
+
+    // Pastikan benar-benar ada satu data yang diperbarui.
+    $affectedRows = $stmt->affected_rows;
+
+    $stmt->close();
+
+    return $success && $affectedRows === 1;
+}
 }

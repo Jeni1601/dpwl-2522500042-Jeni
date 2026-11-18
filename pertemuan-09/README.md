@@ -58,3 +58,15 @@ Halaman dibuat menggunakan template AdminLTE 2 yang telah digunakan pada halaman
 Disediakan tombol Detail pada setiap baris pembayaran untuk menuju halaman pemeriksaan pembayaran. Integrasi controller dan routes serta proses menerima atau menolak pembayaran akan dilanjutkan pada tahapan berikutnya.
 
 **Hasil:** Halaman daftar pembayaran Admin berhasil dibuat dan syntax PHP telah diperiksa. Pengujian melalui browser akan dilakukan setelah integrasi controller dan routes selesai.
+
+### Tahap 9: Membuat Proses Verifikasi Pembayaran Admin
+
+Pada tahap ini dilakukan pembuatan proses verifikasi pembayaran oleh Admin pada controller `Pembayaran_controller.php`. Proses verifikasi digunakan untuk menentukan apakah pembayaran penyewa diterima atau ditolak.
+
+Ditambahkan fungsi `verifikasiAdmin()` untuk menangani proses verifikasi pembayaran. Fungsi ini memastikan Admin sudah login, memeriksa metode permintaan, memvalidasi status pembayaran, dan memproses verifikasi melalui `Pembayaran_model`.
+
+Admin dapat menentukan status pembayaran menjadi valid atau invalid. Status valid digunakan ketika pembayaran diterima, sedangkan status invalid digunakan ketika pembayaran ditolak. Proses verifikasi juga mencatat waktu verifikasi pada database.
+
+Method `verifikasi()` pada `Pembayaran_model.php` diperbarui untuk memastikan hanya pembayaran dengan status pending yang dapat diverifikasi. Selain itu, dilakukan pemeriksaan jumlah data yang berhasil diperbarui agar proses verifikasi tidak dianggap berhasil apabila tidak ada data pembayaran yang berubah.
+
+**Hasil:** Fungsi verifikasi pembayaran Admin berhasil ditambahkan pada controller dan method verifikasi model diperbarui. Syntax check controller dan model dilakukan untuk memastikan tidak terdapat kesalahan sintaks. Integrasi tombol verifikasi dan routes akan dilanjutkan pada tahap berikutnya.

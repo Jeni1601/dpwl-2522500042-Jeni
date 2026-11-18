@@ -298,4 +298,67 @@ class Pembayaran_controller extends Controller
     );
     exit;
 }
+// P9: Proses verifikasi pembayaran oleh Admin
+public function verifikasiAdmin(string $kodeBayar): void
+{
+    // Memastikan hanya Admin yang login dapat melakukan verifikasi.
+    require_once APPPATH . 'helpers/auth_helper.php';
+    require_admin_login();
+
+    // Verifikasi hanya boleh dilakukan melalui POST.
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        http_response_code(405);
+        exit('Metode permintaan tidak diizinkan.');
+    }
+
+    // Mengambil status yang dipilih Admin.
+    $status = $_POST['status'] ?? '';
+
+    // Validasi status verifikasi.
+    if (!in_array($status, ['valid', 'invalid'], true)) {
+        $_SESSION['flash_pembayaran_admin'] = [
+            'type' => 'error',
+            'message' => 'Status verifikasi tidak valid.'
+        ];
+
+        header('Location: ' . site_url('admin/pembayaran'));
+        exit;
+    }
+
+    try {
+        // Memproses verifikasi melalui model.
+        $berhasil = $this->model->verifikasi(
+            $kodeBayar,
+            $status
+        );
+
+        if ($berhasil) {
+            $_SESSION['flash_pembayaran_admin'] = [
+                'type' => 'success',
+                'message' => $status === 'valid'
+                    ? 'Pembayaran berhasil diterima.'
+                    : 'Pembayaran berhasil ditolak.'
+            ];
+        } else {
+            $_SESSION['flash_pembayaran_admin'] = [
+                'type' => 'error',
+                'message' => 'Pembayaran gagal diverifikasi.'
+            ];
+        }
+    } catch (Throwable $e) {
+        error_log(
+            'Verifikasi pembayaran Admin gagal: '
+            . $e->getMessage()
+        );
+
+        $_SESSION['flash_pembayaran_admin'] = [
+            'type' => 'error',
+            'message' => 'Terjadi kesalahan saat memverifikasi pembayaran.'
+        ];
+    }
+
+    // Kembali ke daftar pembayaran Admin.
+    header('Location: ' . site_url('admin/pembayaran'));
+    exit;
+}
 }
