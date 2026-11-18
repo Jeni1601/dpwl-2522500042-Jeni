@@ -22,3 +22,15 @@ Selain itu, dibuat method `wajibLoginPenyewa()` untuk memeriksa session login pe
 Pada tahap ini juga dilakukan pemeriksaan syntax PHP menggunakan perintah `php -l` untuk memastikan controller tidak memiliki kesalahan syntax.
 
 **Hasil:** File `Pembayaran_controller.php` berhasil dibuat untuk mengatur pengambilan daftar dan detail pembayaran penyewa. Pengujian halaman di browser akan dilanjutkan setelah pembuatan view dan integrasi routes.
+
+## Tahap 6: Membuat Halaman Daftar Pembayaran Penyewa
+
+Pada tahap ini dilakukan pembuatan halaman daftar pembayaran penyewa pada file application/views/pembayaran/index.php. Halaman ini digunakan untuk menampilkan data pembayaran yang telah tercatat setelah penyewa melakukan checkout.
+
+Informasi yang ditampilkan meliputi kode pembayaran, kode sewa, tanggal pembayaran, jenis pembayaran, nominal pembayaran, metode pembayaran, dan status pembayaran. Status pembayaran ditampilkan menggunakan badge untuk membedakan pembayaran yang masih menunggu verifikasi, sudah valid, atau tidak valid.
+
+Halaman dibuat menggunakan komponen Bootstrap dan mengikuti tampilan halaman katalog serta keranjang yang sudah ada. Selain itu, digunakan htmlspecialchars() untuk mengamankan data yang ditampilkan dan fungsi format rupiah agar nominal pembayaran lebih mudah dibaca.
+
+Disediakan juga tombol Detail untuk menuju halaman detail pembayaran. Integrasi routes dan pengujian halaman akan dilanjutkan pada tahapan berikutnya.
+
+Hasil: Halaman daftar pembayaran penyewa berhasil dibuat dan syntax PHP berhasil diperiksa. Integrasi ke browser akan dilakukan setelah routes dan halaman detail pembayaran tersedia.
