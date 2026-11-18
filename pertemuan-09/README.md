@@ -80,3 +80,11 @@ Pada halaman ini, informasi yang ditampilkan meliputi kode pembayaran, kode sewa
 Saya juga melakukan perbaikan pada pengambilan data pembayaran di halaman view agar data yang dikirim oleh controller dapat ditampilkan dengan benar. Sebelumnya, halaman menampilkan pesan “Belum ada data pembayaran” meskipun data pembayaran sudah tersedia. Hal tersebut terjadi karena nama variabel yang digunakan pada view tidak sesuai dengan nama variabel yang dikirim oleh controller. Setelah diperbaiki, data pembayaran berhasil ditampilkan pada halaman Pembayaran Saya.
 
 **Hasil pengujian:** halaman Pembayaran Saya berhasil menampilkan data pembayaran penyewa, termasuk pembayaran dengan status Menunggu Verifikasi, Tidak Valid, dan Valid. Tombol Detail dan Kembali ke Katalog juga tersedia pada halaman tersebut. Pengujian dilakukan tanpa mengubah struktur database yang telah disediakan oleh dosen.
+
+### Perbaikan Detail Pembayaran Penyewa
+
+Pada tahap ini, saya memperbaiki tombol Detail pada halaman Pembayaran Saya yang sebelumnya mengalami Not Found. Permasalahan terjadi karena kode pembayaran memiliki karakter garis miring (/) sehingga tidak dapat diproses dengan benar melalui route yang sebelumnya digunakan.
+
+Perbaikan dilakukan dengan menggunakan query string untuk mengirim kode pembayaran dari halaman daftar pembayaran ke controller. Controller kemudian mengambil kode pembayaran dari query string dan menampilkan detail pembayaran sesuai dengan transaksi milik penyewa yang sedang login.
+
+**Hasil pengujian:** tombol Detail berhasil membuka halaman Detail Pembayaran dan menampilkan kode pembayaran, kode sewa, tanggal pembayaran, jenis pembayaran, nominal, metode pembayaran, status pembayaran, status sewa, serta fitur upload bukti pembayaran. Pengujian berhasil dilakukan tanpa mengubah struktur database.

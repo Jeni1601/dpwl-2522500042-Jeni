@@ -212,17 +212,16 @@ $labelStatus = static function (string $status): string {
                                         </td>
 
                                         <td class="text-center text-nowrap">
-                                            <a class="btn btn-sm btn-outline-success"
-                                               href="<?= $e(
-                                                   site_url(
-                                                       'pembayaran_controller/detail/'
-                                                       . rawurlencode($kodeBayar)
-                                                   )
-                                               ) ?>">
-                                                <i class="fas fa-eye me-1"
-                                                   aria-hidden="true"></i>
-                                                Detail
-                                            </a>
+                                           <a class="btn btn-sm btn-outline-success"
+   href="<?= $e(
+       site_url(
+           'pembayaran/detail?kode_bayar='
+           . rawurlencode($kodeBayar)
+       )
+   ) ?>">
+    <i class="fas fa-eye me-1" aria-hidden="true"></i>
+    Detail
+</a>
                                         </td>
                                     </tr>
 

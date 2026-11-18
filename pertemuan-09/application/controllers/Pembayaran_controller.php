@@ -44,40 +44,50 @@ class Pembayaran_controller extends Controller
     // =====================================================
     // P9: DETAIL PEMBAYARAN PENYEWA
     // =====================================================
-    public function detail(string $kodeBayar): void
-    {
-        $userPlg = $this->wajibLoginPenyewa();
+   public function detail(): void
+{
+    $userPlg = $this->wajibLoginPenyewa();
 
-        try {
-            $detail = $this->model->getDetailPenyewa(
-                $kodeBayar,
-                $userPlg
-            );
+    // Mengambil kode pembayaran dari query string
+    $kodeBayar = trim(
+        (string) ($_GET['kode_bayar'] ?? '')
+    );
 
-            if ($detail === null) {
-                http_response_code(404);
-                exit('Data pembayaran tidak ditemukan.');
-            }
-
-            $flash = $_SESSION['flash_pembayaran'] ?? null;
-            unset($_SESSION['flash_pembayaran']);
-
-            $this->view('pembayaran/detail', [
-                'pembayaran' => $detail,
-                'flash' => $flash,
-                'error' => null
-            ]);
-        } catch (Throwable $e) {
-            error_log(
-                'Detail pembayaran Penyewa gagal: '
-                . $e->getMessage()
-            );
-
-            http_response_code(500);
-
-            exit('Detail pembayaran belum dapat ditampilkan.');
-        }
+    if ($kodeBayar === '') {
+        http_response_code(400);
+        exit('Kode pembayaran tidak tersedia.');
     }
+
+    try {
+        $detail = $this->model->getDetailPenyewa(
+            $kodeBayar,
+            $userPlg
+        );
+
+        if ($detail === null) {
+            http_response_code(404);
+            exit('Data pembayaran tidak ditemukan.');
+        }
+
+        $flash = $_SESSION['flash_pembayaran'] ?? null;
+        unset($_SESSION['flash_pembayaran']);
+
+        $this->view('pembayaran/detail', [
+            'pembayaran' => $detail,
+            'flash' => $flash,
+            'error' => null
+        ]);
+    } catch (Throwable $e) {
+        error_log(
+            'Detail pembayaran Penyewa gagal: '
+            . $e->getMessage()
+        );
+
+        http_response_code(500);
+
+        exit('Detail pembayaran belum dapat ditampilkan.');
+    }
+}
 
     // =====================================================
     // P9: UPLOAD BUKTI PEMBAYARAN PENYEWA
