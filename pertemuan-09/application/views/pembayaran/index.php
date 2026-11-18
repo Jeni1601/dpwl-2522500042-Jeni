@@ -11,8 +11,8 @@ $formatRupiah = static function ($nilai): string {
     return 'Rp ' . number_format((float) $nilai, 0, ',', '.');
 };
 
-$daftarPembayaran = is_array($pembayaran ?? null)
-    ? $pembayaran
+$daftarPembayaran = is_array($daftarPembayaran ?? null)
+    ? $daftarPembayaran
     : [];
 
 $flashType = is_array($flash ?? null)
@@ -57,6 +57,7 @@ $labelStatus = static function (string $status): string {
                 <p class="text-white mb-0">
                     Lihat informasi pembayaran transaksi sewa kendaraan Anda.
                 </p>
+                
             </div>
 
             <div class="col-md-4 text-md-end mt-3 mt-md-0">

@@ -8,8 +8,8 @@ $e = static function ($value): string {
     return htmlspecialchars((string) $value, ENT_QUOTES, 'UTF-8');
 };
 
-$daftarPembayaran = is_array($pembayaran ?? null)
-    ? $pembayaran
+$daftarPembayaran = is_array($daftarPembayaran ?? null)
+    ? $daftarPembayaran
     : [];
 
 $formatRupiah = static function ($nilai): string {
@@ -200,19 +200,19 @@ $labelStatus = static function (string $status): string {
                                             </span>
                                         </td>
 
-                                        <td class="text-center">
-                                            <a
-                                                href="<?= $e(
-                                                    site_url(
-                                                        'admin/pembayaran/detail/'
-                                                        . rawurlencode($kodeBayar)
-                                                    )
-                                                ) ?>"
-                                                class="btn btn-xs btn-primary">
-                                                <i class="fa fa-eye"></i>
-                                                Detail
-                                            </a>
-                                        </td>
+                                       <td class="text-center">
+    <a
+        href="<?= $e(
+            site_url(
+                'admin/pembayaran/detail?kode_bayar='
+                . rawurlencode($kodeBayar)
+            )
+        ) ?>"
+        class="btn btn-xs btn-primary">
+        <i class="fa fa-eye"></i>
+        Detail
+    </a>
+</td>
                                     </tr>
 
                                 <?php endforeach; ?>

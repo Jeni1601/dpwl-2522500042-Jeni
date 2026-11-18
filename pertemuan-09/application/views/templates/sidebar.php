@@ -69,6 +69,12 @@ search"></i>
             <span>Manajemen Penyewa</span>
         </a>
     </li>
+    <li>
+    <a href="<?= htmlspecialchars(site_url('admin/pembayaran'), ENT_QUOTES, 'UTF-8') ?>">
+        <i class="fa fa-money"></i>
+        <span>Manajemen Pembayaran</span>
+    </a>
+</li>
 </ul>
 <!-- /.sidebar-menu -->
 

@@ -1,364 +1,426 @@
 <?php
 
+require_once APPPATH . 'models/Pembayaran_model.php';
+
 class Pembayaran_controller extends Controller
 {
     private Pembayaran_model $model;
 
     public function __construct()
     {
-        require_once APPPATH . 'models/Pembayaran_model.php';
-
         $this->model = new Pembayaran_model();
     }
 
-    // P9: Menampilkan daftar pembayaran penyewa
+    // =====================================================
+    // P9: DAFTAR PEMBAYARAN PENYEWA
+    // =====================================================
     public function index(): void
     {
-        $this->wajibLoginPenyewa();
-
-        $userPlg = $_SESSION['penyewa_user_plg'];
+        $userPlg = $this->wajibLoginPenyewa();
 
         try {
-            $dataPembayaran = $this->model->getByPenyewa($userPlg);
+            $daftarPembayaran = $this->model->getByPenyewa($userPlg);
 
             $flash = $_SESSION['flash_pembayaran'] ?? null;
             unset($_SESSION['flash_pembayaran']);
 
             $this->view('pembayaran/index', [
-                'pembayaran' => $dataPembayaran,
+                'daftarPembayaran' => $daftarPembayaran,
                 'flash' => $flash,
                 'error' => null
             ]);
         } catch (Throwable $e) {
             error_log(
-                'Daftar pembayaran penyewa gagal: ' . $e->getMessage()
+                'Daftar pembayaran Penyewa gagal: '
+                . $e->getMessage()
             );
 
-            $this->view('pembayaran/index', [
-                'pembayaran' => [],
-                'flash' => null,
-                'error' => 'Data pembayaran belum dapat ditampilkan.'
-            ]);
+            http_response_code(500);
+
+            exit('Daftar pembayaran belum dapat ditampilkan.');
         }
     }
 
-    // P9: Menampilkan detail pembayaran penyewa
-   public function detail(string $kodeBayar): void
-{
-    $this->wajibLoginPenyewa();
-
-    $userPlg = $_SESSION['penyewa_user_plg'];
-
-    try {
-        $detail = $this->model->getDetailPenyewa(
-            $kodeBayar,
-            $userPlg
-        );
-
-        if ($detail === null) {
-            http_response_code(404);
-            exit('Data pembayaran tidak ditemukan.');
-        }
-
-        $flash = $_SESSION['flash_pembayaran'] ?? null;
-        unset($_SESSION['flash_pembayaran']);
-
-        $this->view('pembayaran/detail', [
-            'pembayaran' => $detail,
-            'flash' => $flash,
-            'error' => null
-        ]);
-
-    } catch (Throwable $e) {
-        error_log(
-            'Detail pembayaran penyewa gagal: '
-            . $e->getMessage()
-        );
-
-        http_response_code(500);
-        exit('Detail pembayaran belum dapat ditampilkan.');
-    }
-}
-
-    // P9: Memastikan penyewa sudah login
-    private function wajibLoginPenyewa(): void
+    // =====================================================
+    // P9: DETAIL PEMBAYARAN PENYEWA
+    // =====================================================
+    public function detail(string $kodeBayar): void
     {
-        if (
-            !isset($_SESSION['penyewa_user_plg']) ||
-            $_SESSION['penyewa_user_plg'] === ''
-        ) {
-            header(
-                'Location: ' . site_url('auth/login-penyewa')
+        $userPlg = $this->wajibLoginPenyewa();
+
+        try {
+            $detail = $this->model->getDetailPenyewa(
+                $kodeBayar,
+                $userPlg
             );
-            exit;
-        }
-    }
-    public function uploadBukti(string $kodeBayar): void
-{
-    $this->wajibLoginPenyewa();
 
-    $userPlg = $_SESSION['penyewa_user_plg'];
-
-    // Pastikan pembayaran milik penyewa yang sedang login.
-    $detail = $this->model->getDetailPenyewa(
-        $kodeBayar,
-        $userPlg
-    );
-
-    if ($detail === null) {
-        http_response_code(404);
-        exit('Data pembayaran tidak ditemukan.');
-    }
-
-    // Upload hanya diperbolehkan untuk transfer
-    // dengan status pending atau invalid.
-    if (
-        $detail['mtode_byr'] !== 'transfer'
-        || !in_array(
-            $detail['sttus_byr'],
-            ['pending', 'invalid'],
-            true
-        )
-    ) {
-        $_SESSION['flash_pembayaran'] = [
-            'type' => 'error',
-            'message' => 'Pembayaran tidak dapat menerima bukti upload.'
-        ];
-
-        header(
-            'Location: '
-            . site_url(
-                'pembayaran_controller/detail/'
-                . rawurlencode($kodeBayar)
-            )
-        );
-        exit;
-    }
-
-    // Pastikan file dikirim melalui form.
-    if (
-        !isset($_FILES['ft_byr'])
-        || $_FILES['ft_byr']['error'] !== UPLOAD_ERR_OK
-    ) {
-        $_SESSION['flash_pembayaran'] = [
-            'type' => 'error',
-            'message' => 'Silakan pilih file bukti pembayaran.'
-        ];
-
-        header(
-            'Location: '
-            . site_url(
-                'pembayaran_controller/detail/'
-                . rawurlencode($kodeBayar)
-            )
-        );
-        exit;
-    }
-
-    $file = $_FILES['ft_byr'];
-
-    // Maksimal ukuran file 5 MB.
-    if ($file['size'] > 5 * 1024 * 1024) {
-        $_SESSION['flash_pembayaran'] = [
-            'type' => 'error',
-            'message' => 'Ukuran file maksimal 5 MB.'
-        ];
-
-        header(
-            'Location: '
-            . site_url(
-                'pembayaran_controller/detail/'
-                . rawurlencode($kodeBayar)
-            )
-        );
-        exit;
-    }
-
-    // Validasi MIME file.
-    $finfo = new finfo(FILEINFO_MIME_TYPE);
-    $mime = $finfo->file($file['tmp_name']);
-
-    $mimeAllowed = [
-        'image/jpeg' => 'jpg',
-        'image/png' => 'png',
-        'image/webp' => 'webp'
-    ];
-
-    if (!isset($mimeAllowed[$mime])) {
-        $_SESSION['flash_pembayaran'] = [
-            'type' => 'error',
-            'message' => 'File harus berupa JPG, PNG, atau WEBP.'
-        ];
-
-        header(
-            'Location: '
-            . site_url(
-                'pembayaran_controller/detail/'
-                . rawurlencode($kodeBayar)
-            )
-        );
-        exit;
-    }
-
-    // Membuat folder upload jika belum tersedia.
-    $folderUpload = ROOTPATH . 'uploads/pembayaran/';
-
-    if (
-        !is_dir($folderUpload)
-        && !mkdir($folderUpload, 0755, true)
-    ) {
-        $_SESSION['flash_pembayaran'] = [
-            'type' => 'error',
-            'message' => 'Folder upload bukti pembayaran gagal dibuat.'
-        ];
-
-        header(
-            'Location: '
-            . site_url(
-                'pembayaran_controller/detail/'
-                . rawurlencode($kodeBayar)
-            )
-        );
-        exit;
-    }
-
-    // Nama file dibuat unik agar tidak bertabrakan.
-    $namaFile = 'bukti_'
-        . bin2hex(random_bytes(16))
-        . '.'
-        . $mimeAllowed[$mime];
-
-    $tujuanFile = $folderUpload . $namaFile;
-
-    if (!move_uploaded_file(
-        $file['tmp_name'],
-        $tujuanFile
-    )) {
-        $_SESSION['flash_pembayaran'] = [
-            'type' => 'error',
-            'message' => 'Bukti pembayaran gagal diunggah.'
-        ];
-
-        header(
-            'Location: '
-            . site_url(
-                'pembayaran_controller/detail/'
-                . rawurlencode($kodeBayar)
-            )
-        );
-        exit;
-    }
-
-    // Simpan nama file ke database.
-    try {
-        $berhasil = $this->model->updateBukti(
-            $kodeBayar,
-            $userPlg,
-            $namaFile
-        );
-
-        if (!$berhasil) {
-            // Hapus file apabila database gagal diperbarui.
-            if (is_file($tujuanFile)) {
-                unlink($tujuanFile);
+            if ($detail === null) {
+                http_response_code(404);
+                exit('Data pembayaran tidak ditemukan.');
             }
 
+            $flash = $_SESSION['flash_pembayaran'] ?? null;
+            unset($_SESSION['flash_pembayaran']);
+
+            $this->view('pembayaran/detail', [
+                'pembayaran' => $detail,
+                'flash' => $flash,
+                'error' => null
+            ]);
+        } catch (Throwable $e) {
+            error_log(
+                'Detail pembayaran Penyewa gagal: '
+                . $e->getMessage()
+            );
+
+            http_response_code(500);
+
+            exit('Detail pembayaran belum dapat ditampilkan.');
+        }
+    }
+
+    // =====================================================
+    // P9: UPLOAD BUKTI PEMBAYARAN PENYEWA
+    // =====================================================
+    public function uploadBukti(string $kodeBayar): void
+    {
+        $userPlg = $this->wajibLoginPenyewa();
+
+        // Upload bukti hanya melalui POST.
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            http_response_code(405);
+            header('Allow: POST');
+
+            exit('Metode permintaan tidak diizinkan.');
+        }
+
+        // Memastikan file dikirim.
+        if (
+            !isset($_FILES['ft_byr'])
+            || $_FILES['ft_byr']['error'] !== UPLOAD_ERR_OK
+        ) {
+            $_SESSION['flash_pembayaran'] = [
+                'type' => 'error',
+                'message' => 'Bukti pembayaran gagal diunggah.'
+            ];
+
+            $this->redirectDetailPenyewa($kodeBayar);
+        }
+
+        $file = $_FILES['ft_byr'];
+
+        // Batas ukuran file 5 MB.
+        $maksimalUkuran = 5 * 1024 * 1024;
+
+        if ($file['size'] > $maksimalUkuran) {
+            $_SESSION['flash_pembayaran'] = [
+                'type' => 'error',
+                'message' => 'Ukuran bukti pembayaran maksimal 5 MB.'
+            ];
+
+            $this->redirectDetailPenyewa($kodeBayar);
+        }
+
+        // Memastikan file merupakan gambar yang diperbolehkan.
+        $finfo = new finfo(FILEINFO_MIME_TYPE);
+        $mimeType = $finfo->file($file['tmp_name']);
+
+        $mimeDiizinkan = [
+            'image/jpeg' => 'jpg',
+            'image/png' => 'png',
+            'image/webp' => 'webp'
+        ];
+
+        if (!isset($mimeDiizinkan[$mimeType])) {
+            $_SESSION['flash_pembayaran'] = [
+                'type' => 'error',
+                'message' => 'Format bukti harus JPG, PNG, atau WEBP.'
+            ];
+
+            $this->redirectDetailPenyewa($kodeBayar);
+        }
+
+        // Membuat folder upload jika belum tersedia.
+        $folderUpload = ROOTPATH . 'uploads/pembayaran/';
+
+        if (
+            !is_dir($folderUpload)
+            && !mkdir($folderUpload, 0755, true)
+            && !is_dir($folderUpload)
+        ) {
+            $_SESSION['flash_pembayaran'] = [
+                'type' => 'error',
+                'message' => 'Folder upload bukti pembayaran gagal dibuat.'
+            ];
+
+            $this->redirectDetailPenyewa($kodeBayar);
+        }
+
+        // Nama file dibuat unik agar tidak menimpa file lain.
+        $namaFile = bin2hex(random_bytes(16))
+            . '.'
+            . $mimeDiizinkan[$mimeType];
+
+        $lokasiFile = $folderUpload . $namaFile;
+
+        // Memindahkan file upload ke folder aplikasi.
+        if (!move_uploaded_file($file['tmp_name'], $lokasiFile)) {
             $_SESSION['flash_pembayaran'] = [
                 'type' => 'error',
                 'message' => 'Bukti pembayaran gagal disimpan.'
             ];
-        } else {
+
+            $this->redirectDetailPenyewa($kodeBayar);
+        }
+
+        try {
+           // Menyimpan nama file bukti ke database.
+$berhasil = $this->model->updateBukti(
+    $kodeBayar,
+    $userPlg,
+    $namaFile
+);
+
+if ($berhasil) {
+    $_SESSION['flash_pembayaran'] = [
+        'type' => 'success',
+        'message' => 'Bukti pembayaran berhasil diunggah.'
+    ];
+} else {
+    // Menghapus file jika penyimpanan database gagal.
+    if (is_file($lokasiFile)) {
+        unlink($lokasiFile);
+    }
+
+    $_SESSION['flash_pembayaran'] = [
+        'type' => 'error',
+        'message' => 'Bukti gagal disimpan atau pembayaran tidak ditemukan.'
+    ];
+}
+        } catch (Throwable $e) {
+            // Menghapus file jika terjadi error database.
+            if (is_file($lokasiFile)) {
+                unlink($lokasiFile);
+            }
+
+            error_log(
+                'Upload bukti pembayaran gagal: '
+                . $e->getMessage()
+            );
+
             $_SESSION['flash_pembayaran'] = [
-                'type' => 'success',
-                'message' => 'Bukti pembayaran berhasil diunggah. Menunggu verifikasi Admin.'
+                'type' => 'error',
+                'message' => 'Terjadi kesalahan saat menyimpan bukti pembayaran.'
             ];
         }
-    } catch (Throwable $e) {
-        error_log(
-            'Upload bukti pembayaran gagal: '
-            . $e->getMessage()
-        );
 
-        if (is_file($tujuanFile)) {
-            unlink($tujuanFile);
+        $this->redirectDetailPenyewa($kodeBayar);
+    }
+
+    // =====================================================
+    // P9: DAFTAR PEMBAYARAN ADMIN
+    // =====================================================
+    public function indexAdmin(): void
+    {
+        require_once APPPATH . 'helpers/auth_helper.php';
+        require_admin_login();
+
+        try {
+            $daftarPembayaran = $this->model->getAll();
+
+            $flash = $_SESSION['flash_pembayaran_admin'] ?? null;
+            unset($_SESSION['flash_pembayaran_admin']);
+
+            $this->view('admin/pembayaran/index', [
+                'daftarPembayaran' => $daftarPembayaran,
+                'flash' => $flash,
+                'error' => null
+            ]);
+        } catch (Throwable $e) {
+            error_log(
+                'Daftar pembayaran Admin gagal: '
+                . $e->getMessage()
+            );
+
+            http_response_code(500);
+
+            exit('Daftar pembayaran belum dapat ditampilkan.');
+        }
+    }
+
+    // =====================================================
+    // P9: DETAIL PEMBAYARAN ADMIN
+    // Menggunakan query string kode_bayar
+    // =====================================================
+    public function detailAdmin(): void
+    {
+        require_once APPPATH . 'helpers/auth_helper.php';
+        require_admin_login();
+
+        // Mengambil kode pembayaran dari query string.
+        $kodeBayar = trim($_GET['kode_bayar'] ?? '');
+
+        if ($kodeBayar === '') {
+            http_response_code(400);
+
+            exit('Kode pembayaran tidak ditemukan.');
         }
 
-        $_SESSION['flash_pembayaran'] = [
-            'type' => 'error',
-            'message' => 'Terjadi kesalahan saat menyimpan bukti pembayaran.'
-        ];
+        try {
+            $detail = $this->model->getDetailAdmin($kodeBayar);
+
+            if ($detail === null) {
+                http_response_code(404);
+
+                exit('Data pembayaran tidak ditemukan.');
+            }
+
+            $flash = $_SESSION['flash_pembayaran_admin'] ?? null;
+            unset($_SESSION['flash_pembayaran_admin']);
+
+            $this->view('admin/pembayaran/detail', [
+                'pembayaran' => $detail,
+                'flash' => $flash,
+                'error' => null
+            ]);
+        } catch (Throwable $e) {
+            error_log(
+                'Detail pembayaran Admin gagal: '
+                . $e->getMessage()
+            );
+
+            http_response_code(500);
+
+            exit('Detail pembayaran belum dapat ditampilkan.');
+        }
     }
 
-    header(
-        'Location: '
-        . site_url(
-            'pembayaran_controller/detail/'
-            . rawurlencode($kodeBayar)
-        )
-    );
-    exit;
-}
-// P9: Proses verifikasi pembayaran oleh Admin
-public function verifikasiAdmin(string $kodeBayar): void
-{
-    // Memastikan hanya Admin yang login dapat melakukan verifikasi.
-    require_once APPPATH . 'helpers/auth_helper.php';
-    require_admin_login();
+    // =====================================================
+    // P9: VERIFIKASI PEMBAYARAN ADMIN
+    // Menggunakan query string kode_bayar
+    // =====================================================
+    public function verifikasiAdmin(): void
+    {
+        require_once APPPATH . 'helpers/auth_helper.php';
+        require_admin_login();
 
-    // Verifikasi hanya boleh dilakukan melalui POST.
-    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-        http_response_code(405);
-        exit('Metode permintaan tidak diizinkan.');
+        // Verifikasi hanya diperbolehkan melalui POST.
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            http_response_code(405);
+            header('Allow: POST');
+
+            exit('Metode permintaan tidak diizinkan.');
+        }
+
+        // Mengambil kode pembayaran dari query string.
+        $kodeBayar = trim($_GET['kode_bayar'] ?? '');
+
+        if ($kodeBayar === '') {
+            http_response_code(400);
+
+            exit('Kode pembayaran tidak ditemukan.');
+        }
+
+        // Mengambil status dari tombol yang ditekan.
+        $status = $_POST['status'] ?? '';
+
+        // Memvalidasi status yang dipilih Admin.
+        if (!in_array($status, ['valid', 'invalid'], true)) {
+            $_SESSION['flash_pembayaran_admin'] = [
+                'type' => 'error',
+                'message' => 'Status verifikasi tidak valid.'
+            ];
+
+            $this->redirectDetailAdmin($kodeBayar);
+        }
+
+        try {
+            $berhasil = $this->model->verifikasi(
+                $kodeBayar,
+                $status
+            );
+
+            if ($berhasil) {
+                $_SESSION['flash_pembayaran_admin'] = [
+                    'type' => 'success',
+                    'message' => $status === 'valid'
+                        ? 'Pembayaran berhasil diterima.'
+                        : 'Pembayaran berhasil ditolak.'
+                ];
+            } else {
+                $_SESSION['flash_pembayaran_admin'] = [
+                    'type' => 'error',
+                    'message' => 'Pembayaran gagal diverifikasi atau sudah diverifikasi sebelumnya.'
+                ];
+            }
+        } catch (Throwable $e) {
+            error_log(
+                'Verifikasi pembayaran Admin gagal: '
+                . $e->getMessage()
+            );
+
+            $_SESSION['flash_pembayaran_admin'] = [
+                'type' => 'error',
+                'message' => 'Terjadi kesalahan saat memverifikasi pembayaran.'
+            ];
+        }
+
+        // Kembali ke halaman detail pembayaran yang sama.
+        $this->redirectDetailAdmin($kodeBayar);
     }
 
-    // Mengambil status yang dipilih Admin.
-    $status = $_POST['status'] ?? '';
+    // =====================================================
+    // P9: MEMASTIKAN PENYEWA SUDAH LOGIN
+    // =====================================================
+    private function wajibLoginPenyewa(): string
+    {
+        $userPlg = $_SESSION['penyewa_user_plg'] ?? '';
 
-    // Validasi status verifikasi.
-    if (!in_array($status, ['valid', 'invalid'], true)) {
-        $_SESSION['flash_pembayaran_admin'] = [
-            'type' => 'error',
-            'message' => 'Status verifikasi tidak valid.'
-        ];
+        if ($userPlg === '') {
+            $_SESSION['flash_penyewa_nav'] =
+                'Silakan login terlebih dahulu untuk mengakses pembayaran.';
 
-        header('Location: ' . site_url('admin/pembayaran'));
+            header(
+                'Location: '
+                . site_url('auth/login-penyewa')
+            );
+
+            exit;
+        }
+
+        return $userPlg;
+    }
+
+    // =====================================================
+    // P9: REDIRECT KE DETAIL PEMBAYARAN PENYEWA
+    // =====================================================
+    private function redirectDetailPenyewa(string $kodeBayar): void
+    {
+        header(
+            'Location: '
+            . site_url(
+                'pembayaran/detail/'
+                . rawurlencode($kodeBayar)
+            )
+        );
+
         exit;
     }
 
-    try {
-        // Memproses verifikasi melalui model.
-        $berhasil = $this->model->verifikasi(
-            $kodeBayar,
-            $status
+    // =====================================================
+    // P9: REDIRECT KE DETAIL PEMBAYARAN ADMIN
+    // Menggunakan query string agar kode dengan "/" aman
+    // =====================================================
+    private function redirectDetailAdmin(string $kodeBayar): void
+    {
+        header(
+            'Location: '
+            . site_url(
+                'admin/pembayaran/detail?kode_bayar='
+                . rawurlencode($kodeBayar)
+            )
         );
 
-        if ($berhasil) {
-            $_SESSION['flash_pembayaran_admin'] = [
-                'type' => 'success',
-                'message' => $status === 'valid'
-                    ? 'Pembayaran berhasil diterima.'
-                    : 'Pembayaran berhasil ditolak.'
-            ];
-        } else {
-            $_SESSION['flash_pembayaran_admin'] = [
-                'type' => 'error',
-                'message' => 'Pembayaran gagal diverifikasi.'
-            ];
-        }
-    } catch (Throwable $e) {
-        error_log(
-            'Verifikasi pembayaran Admin gagal: '
-            . $e->getMessage()
-        );
-
-        $_SESSION['flash_pembayaran_admin'] = [
-            'type' => 'error',
-            'message' => 'Terjadi kesalahan saat memverifikasi pembayaran.'
-        ];
+        exit;
     }
-
-    // Kembali ke daftar pembayaran Admin.
-    header('Location: ' . site_url('admin/pembayaran'));
-    exit;
-}
 }

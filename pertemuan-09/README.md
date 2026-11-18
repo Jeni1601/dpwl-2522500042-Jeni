@@ -70,3 +70,13 @@ Admin dapat menentukan status pembayaran menjadi valid atau invalid. Status vali
 Method `verifikasi()` pada `Pembayaran_model.php` diperbarui untuk memastikan hanya pembayaran dengan status pending yang dapat diverifikasi. Selain itu, dilakukan pemeriksaan jumlah data yang berhasil diperbarui agar proses verifikasi tidak dianggap berhasil apabila tidak ada data pembayaran yang berubah.
 
 **Hasil:** Fungsi verifikasi pembayaran Admin berhasil ditambahkan pada controller dan method verifikasi model diperbarui. Syntax check controller dan model dilakukan untuk memastikan tidak terdapat kesalahan sintaks. Integrasi tombol verifikasi dan routes akan dilanjutkan pada tahap berikutnya.
+
+## Halaman Pembayaran Saya (Penyewa)
+
+Pada tahap ini, saya membuat halaman **Pembayaran Saya** yang digunakan penyewa untuk melihat daftar pembayaran dari transaksi rental mobil yang telah dilakukan. Data pembayaran diambil berdasarkan username penyewa yang sedang login, sehingga penyewa hanya dapat melihat pembayaran miliknya sendiri.
+
+Pada halaman ini, informasi yang ditampilkan meliputi kode pembayaran, kode sewa, tanggal pembayaran, jenis pembayaran (DP atau pelunasan), nominal pembayaran, metode pembayaran, status pembayaran, dan tombol detail untuk melihat informasi pembayaran lebih lanjut. Selain itu, tersedia tombol Kembali ke Katalog untuk memudahkan penyewa kembali melihat daftar mobil.
+
+Saya juga melakukan perbaikan pada pengambilan data pembayaran di halaman view agar data yang dikirim oleh controller dapat ditampilkan dengan benar. Sebelumnya, halaman menampilkan pesan “Belum ada data pembayaran” meskipun data pembayaran sudah tersedia. Hal tersebut terjadi karena nama variabel yang digunakan pada view tidak sesuai dengan nama variabel yang dikirim oleh controller. Setelah diperbaiki, data pembayaran berhasil ditampilkan pada halaman Pembayaran Saya.
+
+**Hasil pengujian:** halaman Pembayaran Saya berhasil menampilkan data pembayaran penyewa, termasuk pembayaran dengan status Menunggu Verifikasi, Tidak Valid, dan Valid. Tombol Detail dan Kembali ke Katalog juga tersedia pada halaman tersebut. Pengujian dilakukan tanpa mengubah struktur database yang telah disediakan oleh dosen.
