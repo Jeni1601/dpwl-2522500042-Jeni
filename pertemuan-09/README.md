@@ -46,3 +46,15 @@ Fitur upload hanya dapat dilakukan oleh penyewa yang memiliki transaksi tersebut
 Pada controller Pembayaran_controller.php, ditambahkan fungsi uploadBukti() untuk menangani proses upload, validasi file, penyimpanan file, dan pembaruan data bukti pembayaran pada database. Fungsi detail() juga diperbarui untuk menampilkan pesan hasil upload.
 
 Hasil: Halaman detail pembayaran dan proses upload bukti pembayaran berhasil dibuat. Pemeriksaan syntax PHP dilakukan pada file view dan controller. Pengujian melalui browser akan dilanjutkan setelah integrasi routes pada tahap berikutnya.
+
+### Tahap 8: Membuat Halaman Daftar Pembayaran Admin
+
+Pada tahap ini dilakukan pembuatan halaman daftar pembayaran untuk Admin pada file `application/views/admin/pembayaran/index.php`. Halaman ini digunakan untuk menampilkan seluruh data pembayaran penyewa yang telah tercatat pada sistem.
+
+Informasi yang ditampilkan meliputi kode pembayaran, kode sewa, nama penyewa, tanggal pembayaran, jenis pembayaran, nominal, metode pembayaran, dan status pembayaran. Status pembayaran menggunakan label berwarna untuk membedakan pembayaran yang menunggu verifikasi, valid, dan tidak valid.
+
+Halaman dibuat menggunakan template AdminLTE 2 yang telah digunakan pada halaman Admin sebelumnya. Tabel menggunakan class `js-data-table` agar mengikuti pengaturan DataTables yang sudah tersedia pada template Admin.
+
+Disediakan tombol Detail pada setiap baris pembayaran untuk menuju halaman pemeriksaan pembayaran. Integrasi controller dan routes serta proses menerima atau menolak pembayaran akan dilanjutkan pada tahapan berikutnya.
+
+**Hasil:** Halaman daftar pembayaran Admin berhasil dibuat dan syntax PHP telah diperiksa. Pengujian melalui browser akan dilakukan setelah integrasi controller dan routes selesai.
