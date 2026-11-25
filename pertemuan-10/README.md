@@ -32,10 +32,15 @@ E. 1. Menambahkan route sesuai method yang telah dibuat pada application\control
 F. 1. Membuat berkas application\views\admin\pelunasan.php, untuk menampilkan daftar transaksi yang masih memiliki kewajiban pembayaran. Menggunakan data daftarPelunasan yang dikirimkan application\controllers\Pembayaran_controller.ph
    2. Membuat application\views\admin\pelunasan_detail.php, untuk menampilkan detail transaksi yang akan dilunasi. Menggunakan data detailPelunasan yang dikirimkan application\controllers\Pembayaran_controller.php.
 
+G. 1.Membuat berkas baru application\views\admin\dokumen_transaksi.php. View ini 
+menerima data $detailPelunasan yang telah disiapkan oleh Model dan dikirimkan oleh method 
+dokumenTransaksi() pada Controller di bagian D.
+
 # 5. Daftar Berkas yang Ditambahkan atau Diubah
 Berkas yang ditambahkan:
 - application/views/admin/pelunasan.php – Menampilkan daftar transaksi yang masih memiliki kewajiban pembayaran.
 - application/views/admin/pelunasan_detail.php – Menampilkan detail transaksi yang akan dilunasi.
+- application/views/admin/dokumen_transaksi.php – Menampilkan dokumen transaksi yang dapat dicetak atau disimpan sebagai PDF.
 
 Berkas yang Diubah:
 - application/models/Pembayaran_model.php – Menambahkan fungsi untuk mengambil data pelunasan dan menyimpan pembayaran pelunasan.
@@ -48,6 +53,10 @@ struktur basis data masih menggunakan struktur P9 dan tidak ada perubahan.
 
 # 7. Hasil Pengujian Setiap Tahap
 F.3 Menguji Tampilan dan Proses Pelunasan
+
+G.2 Menguji Tampilan dan Cetak Dokumen Transaksi 
+Seluruh pengujian pada tahap G.2 berhasil dilakukan dan berjalan sesuai dengan ketentuan modul P10.
+
 # 8. Kendala, Proses Debugging, dan Perbaikan.
 pada tahap menguji Tampilan dan Proses Pelunasan mengalami error 
 Parse error: syntax error, unexpected token "<", expecting end of file in C:\laragon\www\dpwl_2522500042\application\config\routes.php on line 100, Error tersebut menunjukkan bahwa terdapat kesalahan sintaks PHP pada file: application/config/routes.php.
