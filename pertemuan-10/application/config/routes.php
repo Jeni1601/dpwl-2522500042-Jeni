@@ -93,3 +93,8 @@ $route['admin/pembayaran/verifikasi/(:any)'] = 'Pembayaran_controller/verifikasi
 
 // Memproses keputusan verifikasi pembayaran
 $route['admin/pembayaran/proses-verifikasi/(:any)'] = 'Pembayaran_controller/prosesVerifikasi/$1';
+
+$route['admin/pembayaran/pelunasan'] = 'Pembayaran_controller/pelunasanIndex'; 
+$route['admin/pembayaran/pelunasan/proses/(:any)'] = 'Pembayaran_controller/prosesPelunasan/$1'; 
+$route['admin/pembayaran/dokumen/(:any)'] = 'Pembayaran_controller/dokumenTransaksi/$1'; 
+$route['admin/pembayaran/pelunasan/(:any)'] = 'Pembayaran_controller/pelunasanDetail/$1';<script type="module" src=""></script>
