@@ -29,8 +29,13 @@ D. 1. Menampilkan Daftar Transaksi yang Belum Lunas Method pelunasanIndex() pada
 E. 1. Menambahkan route sesuai method yang telah dibuat pada application\controllers\Pembayaran_controller.php pada berkas application\config\routes.php. 
    2. Menambahkan menu Pelunasan pada bagian navigasi admin, pada berkas  sidebar admin application\views\templates\sidebar.php. 
 
+F. 1. Membuat berkas application\views\admin\pelunasan.php, untuk menampilkan daftar transaksi yang masih memiliki kewajiban pembayaran. Menggunakan data daftarPelunasan yang dikirimkan application\controllers\Pembayaran_controller.ph
+   2. Membuat application\views\admin\pelunasan_detail.php, untuk menampilkan detail transaksi yang akan dilunasi. Menggunakan data detailPelunasan yang dikirimkan application\controllers\Pembayaran_controller.php.
+
 # 5. Daftar Berkas yang Ditambahkan atau Diubah
 Berkas yang ditambahkan:
+- application/views/admin/pelunasan.php – Menampilkan daftar transaksi yang masih memiliki kewajiban pembayaran.
+- application/views/admin/pelunasan_detail.php – Menampilkan detail transaksi yang akan dilunasi.
 
 Berkas yang Diubah:
 - application/models/Pembayaran_model.php – Menambahkan fungsi untuk mengambil data pelunasan dan menyimpan pembayaran pelunasan.
@@ -42,6 +47,12 @@ Berkas yang Diubah:
 struktur basis data masih menggunakan struktur P9 dan tidak ada perubahan.
 
 # 7. Hasil Pengujian Setiap Tahap
-
+F.3 Menguji Tampilan dan Proses Pelunasan
 # 8. Kendala, Proses Debugging, dan Perbaikan.
-
+pada tahap menguji Tampilan dan Proses Pelunasan mengalami error 
+Parse error: syntax error, unexpected token "<", expecting end of file in C:\laragon\www\dpwl_2522500042\application\config\routes.php on line 100, Error tersebut menunjukkan bahwa terdapat kesalahan sintaks PHP pada file: application/config/routes.php.
+ Ada kode HTML yang tidak sengaja masuk ke dalam file routes.php, tepatnya pada bagian paling akhir:
+<script type="module" src=""></script> Kode tersebut tidak seharusnya berada di dalam file konfigurasi route PHP. Itulah yang menyebabkan pesan unexpected token "<"
+Perbaikannya :
+Menghapus kode <script type="module" src=""></script> tersebut.
+Agar lebih mudah, berikut kode routes.php lengkap yang sudah saya rapikan. Saya juga mempertahankan seluruh route P2 sampai P9 dan menambahkan route P10.

@@ -71,13 +71,8 @@ $route['transaksi/checkout'] = 'Transaksi_controller/checkout';
 // ROUTE P9 - PEMBAYARAN PENYEWA
 // =====================================================
 
-// Menampilkan daftar pembayaran penyewa
 $route['pembayaran'] = 'Pembayaran_controller/index';
-
-// Menampilkan detail pembayaran berdasarkan kode pembayaran
 $route['pembayaran/detail/(:any)'] = 'Pembayaran_controller/detail/$1';
-
-// Mengunggah foto bukti pembayaran
 $route['pembayaran/upload-bukti/(:any)'] = 'Pembayaran_controller/uploadBukti/$1';
 
 
@@ -85,16 +80,25 @@ $route['pembayaran/upload-bukti/(:any)'] = 'Pembayaran_controller/uploadBukti/$1
 // ROUTE P9 - VERIFIKASI PEMBAYARAN ADMIN
 // =====================================================
 
-// Menampilkan daftar pembayaran yang menunggu verifikasi
 $route['admin/pembayaran'] = 'Pembayaran_controller/verifikasiIndex';
 
-// Menampilkan detail pembayaran untuk admin
 $route['admin/pembayaran/verifikasi/(:any)'] = 'Pembayaran_controller/verifikasiDetail/$1';
 
-// Memproses keputusan verifikasi pembayaran
 $route['admin/pembayaran/proses-verifikasi/(:any)'] = 'Pembayaran_controller/prosesVerifikasi/$1';
 
-$route['admin/pembayaran/pelunasan'] = 'Pembayaran_controller/pelunasanIndex'; 
-$route['admin/pembayaran/pelunasan/proses/(:any)'] = 'Pembayaran_controller/prosesPelunasan/$1'; 
-$route['admin/pembayaran/dokumen/(:any)'] = 'Pembayaran_controller/dokumenTransaksi/$1'; 
-$route['admin/pembayaran/pelunasan/(:any)'] = 'Pembayaran_controller/pelunasanDetail/$1';<script type="module" src=""></script>
+
+// =====================================================
+// ROUTE P10 - PELUNASAN DAN DOKUMEN TRANSAKSI
+// =====================================================
+
+// Menampilkan daftar transaksi yang dapat dilunasi
+$route['admin/pembayaran/pelunasan'] = 'Pembayaran_controller/pelunasanIndex';
+
+// Menampilkan detail pelunasan berdasarkan kode transaksi
+$route['admin/pembayaran/pelunasan/(:any)'] = 'Pembayaran_controller/pelunasanDetail/$1';
+
+// Memproses pembayaran pelunasan
+$route['admin/pembayaran/pelunasan/proses/(:any)'] = 'Pembayaran_controller/prosesPelunasan/$1';
+
+// Menampilkan dokumen transaksi
+$route['admin/pembayaran/dokumen/(:any)'] = 'Pembayaran_controller/dokumenTransaksi/$1';
