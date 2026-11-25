@@ -15,3 +15,11 @@ A. Memperbarui dpwl-nim-nama\pertemuan-10\README.md,
 menyalin seluruh isi workspace dpwl-nim\ ke dpwl-nim-nama\pertemuan-10\
 
 B. Mencari kolom status_sewa dan memeriksa tipe data serta nilai ENUM yang tersedia. Memastikan struktur awal kolom status_sewa.Setelah itu memastikan struktur awal kolom, menambahkan nilai lunas pada ENUM/SET editor untuk kolom status_sewa.  
+
+C. 1. Menambahkan method getDaftarPelunasan() pada berkas application\models\Pembayaran_model.php
+   2. Menambahkan method getDetailPelunasan(string $kodeSewa) pada berkas 
+application\models\Pembayaran_model.php
+   3. Menambahkan method internal buatKodeBayarPelunasan(string $tanggalKode) pada berkas application\models\Pembayaran_model.php
+   4. Menambahkan method simpanPelunasan(string $kodeSewa, string $metodeBayar, ?string $namaFileBukti = null) pada berkas application\models\Pembayaran_model.php
+
+# 5. 
