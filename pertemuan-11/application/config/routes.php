@@ -102,3 +102,8 @@ $route['admin/pembayaran/pelunasan/proses/(:any)'] = 'Pembayaran_controller/pros
 
 // Menampilkan dokumen transaksi
 $route['admin/pembayaran/dokumen/(:any)'] = 'Pembayaran_controller/dokumenTransaksi/$1';
+
+// Route P11 - Pemenuhan dan Serah Terima Kendaraan 
+$route['admin/serah-terima'] = 'SerahTerima_controller/index';
+$route['admin/serah-terima/detail/(:any)'] = 'SerahTerima_controller/detail/$1'; 
+$route['admin/serah-terima/proses/(:any)'] = 'SerahTerima_controller/proses/$1'; 
