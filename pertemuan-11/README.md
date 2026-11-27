@@ -27,3 +27,31 @@ Implementasi direncanakan menggunakan pemisahan tanggung jawab MVC: Model mengel
 penyimpanan data, Controller menangani alur permintaan dan validasi proses, sedangkan View 
 menyajikan informasi serta formulir serah terima. 
 Analisis ini menjadi dasar implementasi pada bagian C sampai dengan F.
+
+# C. Mengimplementasikan Model Serah Terima pada application\models\SerahTerima_model.php
+## C.1. Menginisialisasi Koneksi Basis Data MySQLi 
+Model membutuhkan koneksi basis data untuk menjalankan kueri. Pada aplikasi DPWL, koneksi MySQLi telah 
+tersedia melalui variabel global $db. Membuat berkas baru application\models\SerahTerima_model.php
+
+## C.2. Mengambil Daftar Transaksi yang Memenuhi Syarat Serah Terima
+Menambahkan method getDaftarSerahTerima() setelah konstruktor
+
+## C.3. Mengambil Detail Transaksi, Pembayaran, Penyewa, dan Kendaraan
+Menambahkan method getDetailSerahTerima() Method tersebut menerima $kodeSewa sebagai parameter dan melakukan pemeriksaan agar kode transaksi tidak kosong.
+Menambahkan method getDaftarKendaraan() Method privat tersebut menghubungkan tabel t_pilih dengan t_mobil menggunakan kolom no_plat
+
+## C.4. Mengintegrasikan Data Menggunakan Kueri Lintas Tabel dan Prepared Statement 
+## C.5. Memvalidasi Persyaratan dan Memproses Serah Terima Kendaraan 
+Menambahkan method prosesSerahTerima() pada class SerahTerima_model pada berkas 
+application\models\SerahTerima_model.php 
+
+### C. Implementasi Model Serah Terima
+Membuat `application/models/SerahTerima_model.php` untuk mengelola pengambilan daftar dan detail 
+transaksi serah terima serta pemrosesan penyerahan kendaraan. Model menggunakan MySQLi, prepared 
+statement, kueri lintas tabel, validasi persyaratan transaksi, dan transaksi basis data. 
+ 
+Proses serah terima memeriksa status transaksi, validitas pembayaran DP, kelengkapan dokumen KTP dan 
+SIM A, serta keberadaan kendaraan. Jika seluruh persyaratan terpenuhi, sistem mencatat waktu aktual 
+pengambilan dan mengubah status transaksi menjadi `aktif`. Status kendaraan tetap `disewa`. 
+ 
+Pengujian fungsional Model: dilanjutkan setelah integrasi Controller, route, dan View.  
